@@ -85,6 +85,7 @@ public class SignUp extends AppCompatActivity {
 
         if (password.isEmpty()) {
             etPassword.setError("Please enter a password");
+            //add password logic
             etPassword.requestFocus();
             return false;
         }
@@ -106,11 +107,11 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void checkPermissionAndPickImage() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted, request it
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION);
+                    new String[]{Manifest.permission.READ_MEDIA_IMAGES}, REQUEST_PERMISSION);
         } else {
             // Permission is already granted, start image picker
             startImagePicker();
