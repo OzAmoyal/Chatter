@@ -39,6 +39,12 @@
             android:text="Signup"
             android:id="@+id/btnSignup"
             android:layout_margin="16dp" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="testButton"
+            android:id="@+id/btnTest"
+            android:layout_margin="16dp" />
 
     </LinearLayout>
 

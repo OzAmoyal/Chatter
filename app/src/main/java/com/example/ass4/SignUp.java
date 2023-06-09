@@ -8,11 +8,14 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -63,48 +66,60 @@ public class SignUp extends AppCompatActivity {
                 }
             }
         });
+        }
+
+private boolean validateFields() {
+    String username = etUsername.getText().toString().trim();
+    String displayName = etDisplayName.getText().toString().trim();
+    String password = etPassword.getText().toString();
+    String confirmPassword = etConfirmPassword.getText().toString();
+
+    boolean isValid = true;
+
+    if (username.isEmpty()) {
+        etUsername.setError("Please enter a username");
+        etUsername.requestFocus();
+        isValid = false;
     }
 
-    private boolean validateFields() {
-        String username = etUsername.getText().toString().trim();
-        String displayName = etDisplayName.getText().toString().trim();
-        String password = etPassword.getText().toString();
-        String confirmPassword = etConfirmPassword.getText().toString();
-
-        if (username.isEmpty()) {
-            etUsername.setError("Please enter a username");
-            etUsername.requestFocus();
-            return false;
-        }
-
-        if (displayName.isEmpty()) {
-            etDisplayName.setError("Please enter a display name");
-            etDisplayName.requestFocus();
-            return false;
-        }
-
-        if (password.isEmpty()) {
-            etPassword.setError("Please enter a password");
-            //add password logic
-            etPassword.requestFocus();
-            return false;
-        }
-
-        if (confirmPassword.isEmpty()) {
-            etConfirmPassword.setError("Please confirm your password");
-            etConfirmPassword.requestFocus();
-            return false;
-        }
-
-        if (!password.equals(confirmPassword)) {
-            etConfirmPassword.setError("Passwords do not match");
-            etConfirmPassword.requestFocus();
-            return false;
-        }
-
-        // All fields are valid
-        return true;
+    if (displayName.isEmpty()) {
+        etDisplayName.setError("Please enter a display name");
+        etDisplayName.requestFocus();
+        isValid = false;
     }
+
+    if (password.isEmpty()) {
+        etPassword.setError("Please enter a password");
+        etPassword.requestFocus();
+        isValid = false;
+    } else if (password.length() < 8) {
+        etPassword.setError("Password should be at least 8 characters long");
+        etPassword.requestFocus();
+        isValid = false;
+    } else if (!password.matches(".*\\d.*")) {
+        etPassword.setError("Password should contain at least one number");
+        etPassword.requestFocus();
+        isValid = false;
+    } else if (!password.matches(".*[a-zA-Z].*")) {
+        etPassword.setError("Password should contain at least one character");
+        etPassword.requestFocus();
+        isValid = false;
+    }
+
+    if (confirmPassword.isEmpty()) {
+        etConfirmPassword.setError("Please confirm your password");
+        etConfirmPassword.requestFocus();
+        isValid = false;
+    } else if (!password.equals(confirmPassword)) {
+        etConfirmPassword.setError("Passwords do not match");
+        etConfirmPassword.requestFocus();
+        isValid = false;
+    }
+
+    return isValid;
+}
+
+
 
     private void checkPermissionAndPickImage() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)

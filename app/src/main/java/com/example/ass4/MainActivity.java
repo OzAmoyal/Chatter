@@ -24,7 +24,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //******************************************************************************************
+        View btnTest = findViewById(R.id.btnTest);
 
+        // Set click listener on the login button
+        btnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an intent to launch the Login activity
+                Intent intent = new Intent(MainActivity.this, ContactsActivity.class);
+                startActivity(intent);
+            }
+        });
+//******************************************************************************************
         // Find the signup button by its id
         View btnSignup = findViewById(R.id.btnSignup);
 
