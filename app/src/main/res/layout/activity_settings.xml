@@ -34,6 +34,7 @@
         android:id="@+id/spinnerTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="?attr/colorOnSecondary"
         android:padding="8dp"
         android:entries="@array/theme_options"
         android:background="@android:drawable/btn_dropdown" />
@@ -48,15 +49,5 @@
         android:textColor="@android:color/white"
         android:textSize="16sp"
         android:layout_marginTop="24dp" />
-
-        <Button
-    android:id="@+id/buttonSample"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Sample Button"
-    android:layout_marginTop="16dp"
-    android:layout_gravity="center"
-    style="@style/AppTheme.Button" />
-
 
 </LinearLayout>

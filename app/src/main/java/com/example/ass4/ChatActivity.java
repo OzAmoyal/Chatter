@@ -3,6 +3,7 @@ package com.example.ass4;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -17,6 +18,14 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Inside onCreate method of other activities
+        SharedPreferences sharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE);
+        String theme = sharedPreferences.getString("theme", "Light"); // Default theme is 'Light'
+        if (theme.equals("Dark")) {
+            setTheme(R.style.AppTheme_Dark);
+        } else {
+            setTheme(R.style.AppTheme_Light);
+        }
         setContentView(R.layout.activity_chat);
 
         profilePictureView = findViewById(R.id.user_image_profile_image);

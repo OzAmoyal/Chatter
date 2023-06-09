@@ -14,7 +14,8 @@
         <ImageView
             android:layout_width="400dp"
             android:layout_height="200dp"
-            android:src="@drawable/logo"
+            android:id="@+id/ivLogo"
+            android:src="?attr/android:logo"
             android:scaleType="centerCrop"
             android:padding="16dp" />
 

@@ -19,14 +19,14 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:text="Create an account"
-            android:textColor="@android:color/black"
+            android:textColor="?attr/colorPrimary"
             android:textSize="24sp" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profilepic"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/facebook_avatar"
+            android:src="@drawable/avatar"
             app:shapeAppearanceOverlay="@style/circleImageView"
             android:background="@drawable/imgcircle" />
 
