@@ -15,20 +15,23 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp"
-        android:background="@color/navy_blue"
+        android:background="?attr/colorPrimary"
         app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/user_image_profile_image"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/blue" />
+            android:background="@drawable/imgcircle"
+            android:src="@drawable/modric"
+            app:shapeAppearanceOverlay="@style/circleImageView" />
 
         <TextView
             android:id="@+id/user_text_user_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="39dp"
+            android:layout_marginStart="12dp"
             android:textColor="@color/white"
+            android:layout_gravity="center_vertical"
             android:textSize="25sp"
             android:textStyle="bold"
             tools:text="User Name" />

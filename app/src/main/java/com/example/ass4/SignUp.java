@@ -39,7 +39,7 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         // Initialize views
-        profilePic = findViewById(R.id.profilePic);
+        profilePic = findViewById(R.id.profilepic);
         etUsername = findViewById(R.id.etUsername);
         etDisplayName = findViewById(R.id.etDisplayName);
         etPassword = findViewById(R.id.etPassword);
