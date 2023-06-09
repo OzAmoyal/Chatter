@@ -1,0 +1,60 @@
+<resources>
+    <!-- Light Theme -->
+    <style name="AppTheme.Light" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize light theme attributes -->
+        <item name="colorPrimary">#0048FF</item> <!-- Set the primary color to white -->
+        <item name="colorPrimaryVariant">#0048FF</item> <!-- Set a light shade of gray as the primary variant color -->
+        <item name="colorOnPrimary">#FFFFFF</item> <!-- Set the text color on the primary color to black -->
+        <item name="colorSecondary">#00AFFF</item> <!-- Set a vibrant color as the secondary color -->
+        <item name="colorSecondaryVariant">#FFFFFF</item> <!-- Set a lighter shade of the secondary color as the secondary variant color -->
+        <item name="colorOnSecondary">#AEAEAE</item> <!-- Set the text color on the secondary color to white -->
+        <item name="colorSurface">#FFFFFF</item> <!-- Set the background color to white -->
+        <item name="colorOnSurface">#ACACAC</item> <!-- Set the text color on the surface color to black -->
+        <item name="colorError">#B00020</item> <!-- Set a dark red color for error messages -->
+        <item name="android:logo">@drawable/logo_transparent_light</item>
+    </style>
+    <style name="circleImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <!-- Dark Theme -->
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:logo">@drawable/logo_transparent</item>
+        <item name="colorPrimary">#5E5E5E</item> <!-- Set the primary color to white -->
+        <item name="colorPrimaryVariant">#F5F5F5</item> <!-- Set a light shade of gray as the primary variant color -->
+        <item name="colorOnPrimary">#373737</item> <!-- Set the text color on the primary color to black -->
+        <item name="colorSecondary">#00AFFF</item> <!-- Set a vibrant color as the secondary color -->
+        <item name="colorSecondaryVariant">#FFFFFF</item> <!-- Set a lighter shade of the secondary color as the secondary variant color -->
+        <item name="colorOnSecondary">#5E5E5E</item> <!-- Set the text color on the secondary color to white -->
+        <item name="colorSurface">#202020</item> <!-- Set the background color to white -->
+        <item name="colorOnSurface">#000000</item> <!-- Set the text color on the surface color to black -->
+        <item name="colorError">#B00020</item> <!-- Set a dark red color for error messages -->
+        <item name="backgroundColor">@color/light_gray</item>
+
+
+        <!-- Add other dark theme attributes -->
+    </style>
+
+    <!-- Button Styles -->
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button">
+        <!-- Customize button styles -->
+        <item name="android:textColor">#A50000</item>
+        <item name="android:background">@color/navy_blue</item>
+        <!-- Add other button customizations -->
+    </style>
+
+    <style name="AppTheme.Light.Button" parent="Widget.AppCompat.Button">
+        <!-- Customize button styles for light theme -->
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@color/navy_blue</item>
+        <!-- Add other button customizations for light theme -->
+    </style>
+
+    <style name="AppTheme.Dark.Button" parent="Widget.AppCompat.Button">
+        <!-- Customize button styles for dark theme -->
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/deep_orange</item>
+        <!-- Add other button customizations for dark theme -->
+    </style>
+
+</resources>
