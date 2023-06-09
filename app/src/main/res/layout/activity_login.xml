@@ -51,6 +51,8 @@
             android:layout_height="wrap_content"
             android:text="Login"
             android:id="@+id/btnLogin"
+            android:textColor="?attr/colorSecondaryVariant"
+
             android:layout_margin="16dp" />
 
     </LinearLayout>

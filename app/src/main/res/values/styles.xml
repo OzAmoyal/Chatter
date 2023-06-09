@@ -6,7 +6,7 @@
         <item name="colorPrimaryVariant">#0048FF</item> <!-- Set a light shade of gray as the primary variant color -->
         <item name="colorOnPrimary">#FFFFFF</item> <!-- Set the text color on the primary color to black -->
         <item name="colorSecondary">#00AFFF</item> <!-- Set a vibrant color as the secondary color -->
-        <item name="colorSecondaryVariant">#00FFEA</item> <!-- Set a lighter shade of the secondary color as the secondary variant color -->
+        <item name="colorSecondaryVariant">#FFFFFF</item> <!-- Set a lighter shade of the secondary color as the secondary variant color -->
         <item name="colorOnSecondary">#AEAEAE</item> <!-- Set the text color on the secondary color to white -->
         <item name="colorSurface">#FFFFFF</item> <!-- Set the background color to white -->
         <item name="colorOnSurface">#ACACAC</item> <!-- Set the text color on the surface color to black -->
@@ -24,7 +24,7 @@
         <item name="colorPrimaryVariant">#F5F5F5</item> <!-- Set a light shade of gray as the primary variant color -->
         <item name="colorOnPrimary">#373737</item> <!-- Set the text color on the primary color to black -->
         <item name="colorSecondary">#00AFFF</item> <!-- Set a vibrant color as the secondary color -->
-        <item name="colorSecondaryVariant">#00FFEA</item> <!-- Set a lighter shade of the secondary color as the secondary variant color -->
+        <item name="colorSecondaryVariant">#FFFFFF</item> <!-- Set a lighter shade of the secondary color as the secondary variant color -->
         <item name="colorOnSecondary">#5E5E5E</item> <!-- Set the text color on the secondary color to white -->
         <item name="colorSurface">#202020</item> <!-- Set the background color to white -->
         <item name="colorOnSurface">#000000</item> <!-- Set the text color on the surface color to black -->

@@ -59,7 +59,15 @@ public class ContactsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        ImageButton btnNewChat= findViewById(R.id.btnNewChat);
+        btnNewChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AddChatActivity.class);
 
+                startActivity(intent);
+            }
+        });
         ArrayList<User> users = new ArrayList<>();
 
         for (int i = 0; i < profilePictures.length; i++) {
