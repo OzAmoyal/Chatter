@@ -60,7 +60,7 @@ public class ContactsActivity extends AppCompatActivity {
         RecyclerView lstChats = findViewById(R.id.recycler_view);
         final ChatsAdapter adapter  = new ChatsAdapter(this);
         lstChats.setAdapter(adapter);
-        lstChats.setLayoutManager(new LinearLayoutManager(this));
+        lstChats.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         List<Chat> chats = new ArrayList<>();
 
