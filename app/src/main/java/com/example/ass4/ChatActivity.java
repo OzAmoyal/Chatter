@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.ass4.adapters.MessageAdapter;
+import com.example.ass4.entities.Message;
+
 import java.util.ArrayList;
 
 public class ChatActivity extends AppCompatActivity {
@@ -33,6 +36,7 @@ public class ChatActivity extends AppCompatActivity {
 
         Intent activityIntent = getIntent();
         ArrayList<Message> messages = new ArrayList<>();
+        /*
         messages.add(new Message("Hello", "12:00", true));
         messages.add(new Message("Hi", "12:01", false));
         messages.add(new Message("How are you?", "12:02", true));
@@ -42,6 +46,8 @@ public class ChatActivity extends AppCompatActivity {
         messages.add(new Message("Good to hear that", "12:06", false));
         messages.add(new Message("Bye", "12:07", true));
         messages.add(new Message("Bye!!!", "12:08", false));
+        */
+
         ListView lvMessages = findViewById(R.id.lvMessages);
         MessageAdapter messageAdapter = new MessageAdapter(this, messages);
         lvMessages.setAdapter(messageAdapter);
