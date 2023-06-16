@@ -2,6 +2,7 @@
     <string name="app_name">Ass4</string>
     <string name="login">Login</string>
     <string name="sign_up">sign up</string>
+    <string name="BaseUrl">http://10.0.2.2:3000/api/</string>
 
 
 </resources>

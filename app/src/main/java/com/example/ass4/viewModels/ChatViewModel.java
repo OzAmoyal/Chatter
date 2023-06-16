@@ -1,36 +1,38 @@
 package com.example.ass4.viewModels;
 
-
-
-import androidx.lifecycle.ViewModel;
-/*
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
+
+import com.example.ass4.ChatDao;
+import com.example.ass4.entities.Chat;
+import com.example.ass4.repositories.ChatsRepository;
+
 import java.util.List;
-import com.example.ass4.entities.User;
-*/
+
 public class ChatViewModel extends ViewModel {
-    /*
-    private ChatRepository mRepository;
-    private LiveData<List<User>> users;
 
-    public ChatViewModel(){
-        this.mRepository = new ChatRepository();
-        this.users = mRepository.getAllUsers();
-    }
-    public LiveData<List<User>> getUsers(){
-        return this.users;
-    }
-    public void add(User user){
-        mRepository.add(user);
-    }
-    public void reload(){
-        mRepository.reload();
-    }
-    public void delete(User user){
-        mRepository.delete(user);
-    }
+    private ChatsRepository chatsRepository;
+    private LiveData<List<Chat>> chats;
 
-     */
+    public ChatViewModel(ChatDao chatDao){
+        this.chatsRepository = new ChatsRepository(chatDao);
+        this.chats = chatsRepository.getAllChats();
+    }
+    public LiveData<List<Chat>> getChats(){
+        this.chats=chatsRepository.getAllChats();
+        return this.chats;
+    }
+  /*  public void reload(){
+        chatsRepository.reload();
+    }*/
+//    public void add(Chat chat){
+//        chatsRepository.add(chat);
+//    }
+//    public void delete(User user){
+//        mRepository.delete(user);
+//    }
+
+
 
 }
 

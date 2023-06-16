@@ -1,23 +1,32 @@
 package com.example.ass4.entities;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import java.io.ByteArrayInputStream;
 
 
 @Entity
 public class User {
     @PrimaryKey(autoGenerate = false)
     private String userName;
-    private int pictureId;
+    private Bitmap profilePic;
     private String displayName;
 
-    public User(String userName, int pictureId, String displayName) {
+    public User(String userName, String profilePic, String displayName) {
         this.userName = userName;
-        this.pictureId = pictureId;
+        String cleanBase64 = profilePic.replaceAll("data:image/[^;]+;base64,", "");
+        byte[] imageData = Base64.decode(cleanBase64, Base64.DEFAULT);
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(imageData);
+        this.profilePic = BitmapFactory.decodeStream(inputStream);
         this.displayName = displayName;
     }
 
-    public int getPictureId() {
-        return pictureId;
+    public Bitmap getPicture() {
+        return profilePic;
     }
 
     public String getUserName() {

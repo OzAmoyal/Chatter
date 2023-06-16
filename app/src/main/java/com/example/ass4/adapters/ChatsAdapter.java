@@ -51,7 +51,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatViewHold
             holder.tvTime.setText(current.getLastMessage().getCreated().toString());
             holder.tvUsername.setText(current.getOtherUser().getUserName());
             holder.tvLastMessage.setText(current.getLastMessage().getContent());
-            holder.ivPic.setImageResource(current.getOtherUser().getPictureId());
+            holder.ivPic.setImageBitmap(current.getOtherUser().getPicture());
         }
     }
 
