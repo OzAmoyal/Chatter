@@ -3,7 +3,9 @@ package com.example.ass4;
 import static java.lang.Thread.sleep;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Dao;
@@ -55,10 +57,10 @@ public class ContactsActivity extends AppCompatActivity {
         binding = ActivityContactsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         chats= new ArrayList<>();
-        db = Room.databaseBuilder(getApplicationContext(), ChatDB.class, "ChatDB")
-                .allowMainThreadQueries().build();
-        dao = db.chatDao();
-        chatViewModel = new ChatViewModel(dao);
+//        db = Room.databaseBuilder(getApplicationContext(), ChatDB.class, "ChatDB")
+//                .allowMainThreadQueries().build();
+//        dao = db.chatDao();
+        chatViewModel = new ViewModelProvider(this).get(ChatViewModel.class);
         adapter = new ChatsAdapter(this);
         // addChatsToLocalDB();
         //loadChats();
@@ -66,9 +68,9 @@ public class ContactsActivity extends AppCompatActivity {
         lstChats.setAdapter(adapter);
         lstChats.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         try {
-            chatViewModel.getChats().observe(this, chats -> {
-                adapter.setChats(chats);
-                adapter.notifyDataSetChanged();
+            LiveData<List<Chat>> chats = chatViewModel.getChats();
+            chats.observe(this, chatsList -> {
+                adapter.setChats(chatsList);
             });
         } catch (Exception e) {
             e.printStackTrace();

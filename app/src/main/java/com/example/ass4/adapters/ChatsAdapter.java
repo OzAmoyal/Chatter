@@ -47,11 +47,11 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatViewHold
     public void onBindViewHolder(ChatViewHolder holder, int position){
         if(chats !=null) {
             final Chat current = chats.get(position);
-
+            System.out.println(current.getLastMessage().getContent().toString());
             holder.tvTime.setText(current.getLastMessage().getCreated().toString());
-            holder.tvUsername.setText(current.getOtherUser().getUserName());
+            holder.tvUsername.setText(current.getOtherUser().getDisplayName());
             holder.tvLastMessage.setText(current.getLastMessage().getContent());
-            holder.ivPic.setImageBitmap(current.getOtherUser().getPicture());
+            //holder.ivPic.setImageBitmap(current.getOtherUser().getPicture());
         }
     }
 

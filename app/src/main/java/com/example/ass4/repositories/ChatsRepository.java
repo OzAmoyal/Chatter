@@ -4,59 +4,42 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Room;
 
+import com.example.ass4.ChatDB;
 import com.example.ass4.ChatDao;
+import com.example.ass4.MyApplication;
 import com.example.ass4.api.ChatsAPI;
 import com.example.ass4.entities.Chat;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChatsRepository {
     private ChatDao chatDao;
     private ChatsAPI chatsAPI;
-    private ChatListData chatListData;
+    private MutableLiveData<List<Chat>> chatListData;
 
-    public class ChatListData extends MutableLiveData<List<Chat>> {
-        public ChatListData() {
-            super();
-            setValue(new ArrayList<>());
-        }
+    public ChatsRepository() {
+        ChatDB db = Room.databaseBuilder(MyApplication.getContext(), ChatDB.class, "ChatDB").allowMainThreadQueries().build();
+        chatDao = db.chatDao();
+        chatsAPI = new ChatsAPI();
+        chatListData = new MutableLiveData<>();
+        chatListData.postValue(chatDao.index());
 
-        @Override
-        protected void onActive() {
-            super.onActive();
-            new Thread(() -> {
-                postValue(chatDao.index());
-            }).start();
-        }
-    }
-
-    public ChatsRepository(ChatDao chatDao) {
-        this.chatDao = chatDao;
-        this.chatListData = new ChatListData();
-        this.chatsAPI = new ChatsAPI();
+        reload();
     }
 
     public LiveData<List<Chat>> getAllChats() {
-        reload();
-        List<Chat>newChats=chatDao.index();
-        chatListData.setValue(newChats);
         return chatListData;
     }
 
     public void reload() {
-        try {
-            new GetChatsTask().execute().get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        new GetChatsTask().execute();
     }
 
-    private class GetChatsTask extends AsyncTask<Void, Void, Void> {
+    private class GetChatsTask extends AsyncTask<Void, Void, List<Chat>> {
         @Override
-        protected Void doInBackground(Void... x) {
+        protected List<Chat> doInBackground(Void... params) {
             List<Chat> chats = chatsAPI.getChats();
 
             for (Chat chat : chats) {
@@ -66,7 +49,13 @@ public class ChatsRepository {
                     chatDao.update(chat);
                 }
             }
-            return null;
+
+            return chats;
+        }
+
+        @Override
+        protected void onPostExecute(List<Chat> result) {
+            chatListData.setValue(result);
         }
     }
 }

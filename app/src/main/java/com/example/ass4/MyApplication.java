@@ -13,7 +13,7 @@ public class MyApplication extends Application{
     public void onCreate(){
         super.onCreate();
         context = getApplicationContext();
-        token="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNjg2OTI2MTMzLCJleHAiOjE2ODY5Mjk3MzN9.Z-cu0JWlT85bMwobwnIITsfp3Q__UX7tCRjR-IoFVO8";
+        token="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNjg2OTk5MjQ5LCJleHAiOjE2ODcwMDI4NDl9.IVLX0gXeQAACIJDFplKJT2WiI4Z1_pdLeoEnKXz9aK0";
         user = new User("user1","","oz");
     }
     public static Context getContext(){

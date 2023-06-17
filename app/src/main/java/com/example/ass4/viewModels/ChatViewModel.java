@@ -14,8 +14,8 @@ public class ChatViewModel extends ViewModel {
     private ChatsRepository chatsRepository;
     private LiveData<List<Chat>> chats;
 
-    public ChatViewModel(ChatDao chatDao){
-        this.chatsRepository = new ChatsRepository(chatDao);
+    public ChatViewModel(){
+        this.chatsRepository = new ChatsRepository();
         this.chats = chatsRepository.getAllChats();
     }
     public LiveData<List<Chat>> getChats(){
