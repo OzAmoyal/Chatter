@@ -28,10 +28,10 @@ public interface WebServiceAPI {
  Call<Void> createChat(@Body Chat chat,@Header("Authorization") String token);
  @DELETE("Chats/{id}")
  Call<Void> deleteChat(@Path("id") String id,@Header("Authorization") String token);
- @GET("tokens")
- Call<String> getToken();
- @GET("Users")
- Call<List<User>> getUsers(@Header("Authorization") String token);
+ @POST("tokens")
+ Call<String> getToken(@Body RequestGetTokenAPI requestGetTokenAPI);
+ @GET("Users/{username}")
+ Call<ResponseGetUserDetails> getUser(@Path("username") String username,@Header("Authorization") String token);
  @POST("Users")
  Call<Void> createUser(@Body NewUser user);
  }

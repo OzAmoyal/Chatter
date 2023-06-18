@@ -13,8 +13,8 @@ public class MyApplication extends Application{
     public void onCreate(){
         super.onCreate();
         context = getApplicationContext();
-        token="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNjg2OTk5MjQ5LCJleHAiOjE2ODcwMDI4NDl9.IVLX0gXeQAACIJDFplKJT2WiI4Z1_pdLeoEnKXz9aK0";
-        user = new User("user1","","oz");
+        token= null;
+        user = null;
     }
     public static Context getContext(){
         return context;
@@ -24,6 +24,9 @@ public class MyApplication extends Application{
     }
     public static void setUser(User getUser){
         user=getUser;
+    }
+    public static boolean isUserSet(){
+        return user!=null;
     }
     public static Boolean isThatMe(String username){
         return username.equals(user.getUserName());

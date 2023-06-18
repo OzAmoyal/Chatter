@@ -76,8 +76,8 @@ List<Chat> tempChatList;
     public Chat getChatByID(String id) {
       Call<ResponseGetChatByIDAPI> call = webServiceAPI.getChatById(id,MyApplication.getToken());
         call.enqueue(new Callback<ResponseGetChatByIDAPI>() {
-            @Override
-            public void onResponse(Call<ResponseGetChatByIDAPI> call, Response<ResponseGetChatByIDAPI> response) {
+                @Override
+                public void onResponse(Call<ResponseGetChatByIDAPI> call, Response<ResponseGetChatByIDAPI> response) {
                 if(!response.isSuccessful()){
                     return;
                 }
