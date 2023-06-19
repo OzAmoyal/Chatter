@@ -5,6 +5,8 @@ import com.example.ass4.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.concurrent.CountDownLatch;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,6 +27,8 @@ public class LoginAPI {
         webServiceAPI = retrofit.create(WebServiceAPI.class);
     }
     public Boolean getToken(String username, String password){
+        //LatchCallback loginCallback = new LatchCallback(latch);
+        CountDownLatch latch = new CountDownLatch(1);
         RequestGetTokenAPI requestGetTokenAPI = new RequestGetTokenAPI(username, password);
 //        Gson gson= new Gson();
 //        String json = gson.toJson(requestGetTokenAPI);
@@ -34,13 +38,22 @@ public class LoginAPI {
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
                     MyApplication.setToken("Bearer "+response.body());
+                    System.out.println("Token");
+                    latch.countDown();
                 }
         }
             @Override
             public void onFailure(Call<String> call, Throwable t) {
+                //loginCallback.onLoginFailure();
             }
         });
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return MyApplication.isTokenSet();
     }
+
 
 }

@@ -2,6 +2,7 @@ package com.example.ass4;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.BoringLayout;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.ass4.api.LoginAPI;
 import com.example.ass4.api.UserAPI;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 
 public class Login extends AppCompatActivity {
@@ -46,48 +48,66 @@ public class Login extends AppCompatActivity {
                 isValid = false;
             }
             if (isValid) {
-                LoginAPI api = new LoginAPI();
-                Boolean loginStatus = api.getToken(username, password);
-
-                if (loginStatus) {
-                    CountDownLatch tokenLatch = new CountDownLatch(1);
-                    CountDownLatch userLatch = new CountDownLatch(1);
-
-                    runOnUiThread(() -> {
-                        UserAPI api2 = new UserAPI();
-                        api2.getUserDetails(username);
-                        userLatch.countDown();
-                    });
-
-                    new Thread(() -> {
-                        try {
-                            tokenLatch.await(); // Wait until the token is set
-                            userLatch.await(); // Wait until the user details are set
-                            Intent intent = new Intent(Login.this, ContactsActivity.class);
-                            startActivity(intent);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }).start();
-
-                    runOnUiThread(() -> {
-                        // Wait until the token is set
-                        while (!MyApplication.isTokenSet()) {
-                            try {
-                                Thread.sleep(100);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        tokenLatch.countDown();
-                    });
-                } else {
-                    etUsername.setError("Invalid username or password");
-                    etPassword.setText("");
-                    etPassword.setError("Invalid username or password");
-                    etPassword.requestFocus();
-                }
+                GetTokenTask getTokenTask = new GetTokenTask(username, password);
+                getTokenTask.execute();
+            } else {
+                etUsername.setError("Invalid username or password");
+                etPassword.setText("");
+                etPassword.setError("Invalid username or password");
+                etPassword.requestFocus();
             }
+
         });
     }
+    private class GetTokenTask extends AsyncTask<Void, Void, Boolean> {
+        private String username;
+        private String password;
+
+        public GetTokenTask(String username, String password) {
+            this.username = username;
+            this.password = password;
+        }
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            LoginAPI loginAPI = new LoginAPI();
+            Boolean isTokenSet = loginAPI.getToken(username, password);
+            return isTokenSet;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isTokenSet) {
+            if (isTokenSet) {
+                GetUserTask getUserTask = new GetUserTask(username);
+                getUserTask.execute();
+            } else {
+                Toast.makeText(Login.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
+
+    private class GetUserTask extends AsyncTask<Void, Void, Boolean>{
+    private String username;
+    public GetUserTask(String username) {
+        this.username = username;
+    }
+    @Override
+    protected Boolean doInBackground(Void... voids) {
+        UserAPI userAPI = new UserAPI();
+        Boolean isUserSet = userAPI.getUserDetails(username);
+        return isUserSet;
+    }
+
+
+        @Override
+    protected void onPostExecute(Boolean isUserSet) {
+        if (isUserSet) {
+            Intent intent = new Intent(Login.this, ContactsActivity.class);
+            startActivity(intent);
+        } else {
+            Toast.makeText(Login.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+}
 }

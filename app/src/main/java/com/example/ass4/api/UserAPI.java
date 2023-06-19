@@ -1,14 +1,10 @@
 package com.example.ass4.api;
 
-import android.os.AsyncTask;
-
 import com.example.ass4.MyApplication;
 import com.example.ass4.R;
-import com.example.ass4.entities.Chat;
 import com.example.ass4.entities.User;
 
-import java.io.IOException;
-import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,8 +55,9 @@ public class UserAPI {
         }
     }*/
 
-        public boolean getUserDetails(String username) {
-            Call<ResponseGetUserDetails> call = webServiceAPI.getUser(MyApplication.getToken(), username);
+        public boolean getUserDetails(String username){
+            CountDownLatch latch = new CountDownLatch(1);
+            Call<ResponseGetUserDetails> call = webServiceAPI.getUser(username, MyApplication.getToken());
             call.enqueue(new Callback<ResponseGetUserDetails>() {
                 @Override
                 public void onResponse(Call<ResponseGetUserDetails> call, Response<ResponseGetUserDetails> response) {
@@ -68,6 +65,8 @@ public class UserAPI {
                         ResponseGetUserDetails responseGetUserDetails = response.body();
                         User user = new User(responseGetUserDetails.getUsername(), responseGetUserDetails.getProfilePic(), responseGetUserDetails.getDisplayName());
                         MyApplication.setUser(user);
+                        System.out.println("User");
+                        latch.countDown();
                     }
                 }
 
@@ -75,7 +74,11 @@ public class UserAPI {
                 public void onFailure(Call<ResponseGetUserDetails> call, Throwable t) {
                 }
             });
-
+            try {
+                latch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return MyApplication.isUserSet();
         }
 
