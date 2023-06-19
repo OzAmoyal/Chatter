@@ -7,10 +7,12 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +26,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.ass4.api.UserAPI;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class SignUp extends AppCompatActivity {
@@ -69,8 +74,17 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View v) {
                 // Perform validation checks
                 if (validateFields()) {
-                    // Continue with sign-up process
-                    // ...
+                    String username = etUsername.getText().toString().trim();
+                    String displayName = etDisplayName.getText().toString().trim();
+                    String password = etPassword.getText().toString();
+                    Bitmap bitmap = ((android.graphics.drawable.BitmapDrawable) SignUp.this.profilePic.getDrawable()).getBitmap();
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    byte[] imageBytes = byteArrayOutputStream.toByteArray();
+                    String profilePic = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+                    CreateUserTask createUserTask = new CreateUserTask(username,password,displayName,profilePic);
+                    createUserTask.execute();
+
                 }
             }
         });
@@ -173,6 +187,37 @@ private boolean validateFields() {
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e("SignUp", "Failed to load image");
+            }
+        }
+    }
+
+    private class CreateUserTask extends AsyncTask<Void, Void, Boolean> {
+        private String username;
+        private String password;
+        private String displayName;
+        private String profilePic;
+        public CreateUserTask(String username,String password,String displayName,String profilePic) {
+            this.username = username;
+            this.password = password;
+            this.displayName = displayName;
+            this.profilePic = profilePic;
+        }
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            UserAPI userAPI = new UserAPI();
+            Boolean isUserCreated = userAPI.signUpNewUser(username,password,profilePic,displayName);
+            return isUserCreated;
+        }
+
+
+        @Override
+        protected void onPostExecute(Boolean isUserCreated) {
+            if (isUserCreated) {
+                Intent intent = new Intent(SignUp.this, Login.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(SignUp.this, "the username is already taken", Toast.LENGTH_SHORT).show();
+
             }
         }
     }

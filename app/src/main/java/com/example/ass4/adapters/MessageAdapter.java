@@ -1,4 +1,4 @@
-package com.example.ass4;
+package com.example.ass4.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.ass4.R;
+import com.example.ass4.entities.Message;
 
 import java.util.ArrayList;
 
@@ -38,8 +41,8 @@ public class MessageAdapter extends ArrayAdapter<Message> {
 
         TextView messageText = convertView.findViewById(R.id.tvMessageText);
         TextView messageTime = convertView.findViewById(R.id.tvMessageTime);
-        messageText.setText(message.getMessage());
-        messageTime.setText(message.getTime());
+        messageText.setText(message.getContent());
+        messageTime.setText(message.getCreated().toString());
 
         return convertView;
     }
