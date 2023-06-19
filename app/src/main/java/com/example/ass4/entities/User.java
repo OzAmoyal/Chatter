@@ -7,13 +7,14 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 
 @Entity
 public class User {
     @PrimaryKey(autoGenerate = false)
     private String userName;
-    private Bitmap profilePic;
+    private byte[] profilePic;
     private String displayName;
 
     public User(String userName, String profilePic, String displayName) {
@@ -21,12 +22,17 @@ public class User {
         String cleanBase64 = profilePic.replaceAll("data:image/[^;]+;base64,", "");
         byte[] imageData = Base64.decode(cleanBase64, Base64.DEFAULT);
         ByteArrayInputStream inputStream = new ByteArrayInputStream(imageData);
-        this.profilePic = BitmapFactory.decodeStream(inputStream);
+        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+        convertToByteArray(bitmap);
         this.displayName = displayName;
     }
 
     public Bitmap getPicture() {
-        return profilePic;
+        if (profilePic != null) {
+            return BitmapFactory.decodeByteArray(profilePic, 0, profilePic.length);
+        } else {
+            return null;
+        }
     }
 
     public String getUserName() {
@@ -35,5 +41,10 @@ public class User {
 
     public String getDisplayName(){
         return displayName;
+    }
+    public void convertToByteArray(Bitmap bitmap){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        profilePic = stream.toByteArray();
     }
 }

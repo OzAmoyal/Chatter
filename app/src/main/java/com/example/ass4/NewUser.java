@@ -1,24 +1,24 @@
 package com.example.ass4;
 
 public class NewUser {
-    private String userName;
-    private int pictureId;
+    private String username;
+    private String profilePic;
     private String displayName;
     private String password;
 
-    public NewUser(String userName, int pictureId, String displayName, String password) {
-        this.userName = userName;
-        this.pictureId = pictureId;
+    public NewUser(String username, String profilePic, String displayName, String password) {
+        this.username = username;
+        this.profilePic = profilePic;
         this.displayName = displayName;
         this.password = password;
     }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
-    public int getPictureId() {
-        return pictureId;
+    public String getProfilePic() {
+        return profilePic;
     }
 
     public String getDisplayName() {

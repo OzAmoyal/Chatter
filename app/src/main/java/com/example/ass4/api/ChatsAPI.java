@@ -11,6 +11,7 @@ import com.example.ass4.entities.Message;
 import com.example.ass4.entities.User;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.sql.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

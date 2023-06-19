@@ -38,13 +38,15 @@ public class LoginAPI {
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
                     MyApplication.setToken("Bearer "+response.body());
-                    System.out.println("Token");
+                    latch.countDown();
+                }
+                else{
                     latch.countDown();
                 }
         }
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                //loginCallback.onLoginFailure();
+                latch.countDown();
             }
         });
         try {

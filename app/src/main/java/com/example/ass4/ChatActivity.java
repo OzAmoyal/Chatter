@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -36,26 +38,16 @@ public class ChatActivity extends AppCompatActivity {
 
         Intent activityIntent = getIntent();
         ArrayList<Message> messages = new ArrayList<>();
-        /*
-        messages.add(new Message("Hello", "12:00", true));
-        messages.add(new Message("Hi", "12:01", false));
-        messages.add(new Message("How are you?", "12:02", true));
-        messages.add(new Message("I'm fine", "12:03", false));
-        messages.add(new Message("What about you?", "12:04", false));
-        messages.add(new Message("I'm fine too", "12:05", true));
-        messages.add(new Message("Good to hear that", "12:06", false));
-        messages.add(new Message("Bye", "12:07", true));
-        messages.add(new Message("Bye!!!", "12:08", false));
-        */
 
         ListView lvMessages = findViewById(R.id.lvMessages);
         MessageAdapter messageAdapter = new MessageAdapter(this, messages);
         lvMessages.setAdapter(messageAdapter);
         if (activityIntent != null) {
             String userName = activityIntent.getStringExtra("userName");
-            int profilePicture = activityIntent.getIntExtra("profilePicture", R.drawable.blue);
+            byte[] profilePictureByteArray = getIntent().getByteArrayExtra("profilePicture");
+            Bitmap profilePictureBitmap = BitmapFactory.decodeByteArray(profilePictureByteArray, 0, profilePictureByteArray.length);
 
-            profilePictureView.setImageResource(profilePicture);
+            profilePictureView.setImageBitmap(profilePictureBitmap);
             userNameView.setText(userName);
         }
     }

@@ -13,10 +13,13 @@ import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +33,7 @@ import com.example.ass4.entities.User;
 import com.example.ass4.repositories.ChatsRepository;
 import com.example.ass4.viewModels.ChatViewModel;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -83,7 +87,8 @@ public class ContactsActivity extends AppCompatActivity {
 //        ChatsAPI chatAPI = new ChatsAPI();
 //        chatAPI.getChatByID("6478b5e136fa475773babe29");
 
-
+        ImageView ivProfilePictures = binding.ivProfilePictures;
+        ivProfilePictures.setImageBitmap(MyApplication.getUser().getPicture());
         ImageButton btnSettings = binding.btnSettings;
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +108,15 @@ public class ContactsActivity extends AppCompatActivity {
             }
         });
 
+        ImageButton btnLogout = binding.btnLogout;
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MyApplication.setUser(null);
+                MyApplication.setToken(null);
+               finish();
+            }
+        });
 
     }
 
@@ -128,18 +142,18 @@ public class ContactsActivity extends AppCompatActivity {
         messages.add(message4);
         messages.add(message5);
 
-        User otherUser = new User("john_doe", "R.drawable.modric", "John Doe");
-        User otherUser2 = new User("user2", "R.drawable.neymar", "neymar");
+        //User otherUser = new User("john_doe", "R.drawable.modric", "John Doe");
+        //User otherUser2 = new User("user2", "R.drawable.neymar", "neymar");
         Message lastMessage = message5;
         String id1 = "1";
         String id2 = "2";
 // Create eight instances of Chat with the same messages
-        Chat chat1 = new Chat(id1, messages, otherUser, lastMessage);
-        Chat chat2 = new Chat(id2, messages, otherUser2, lastMessage);
+        //Chat chat1 = new Chat(id1, messages, otherUser, lastMessage);
+        //Chat chat2 = new Chat(id2, messages, otherUser2, lastMessage);
 
 
 // Add the eight instances to the chats list
-        dao.insert(chat1);
-        dao.insert(chat2);
+        //dao.insert(chat1);
+        //dao.insert(chat2);
     }
 }

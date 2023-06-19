@@ -28,6 +28,9 @@ public class MyApplication extends Application{
     public static boolean isUserSet(){
         return user!=null;
     }
+    public static User getUser(){
+        return user;
+    }
     public static Boolean isThatMe(String username){
         return username.equals(user.getUserName());
     }

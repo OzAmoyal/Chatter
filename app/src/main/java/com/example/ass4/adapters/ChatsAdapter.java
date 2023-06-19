@@ -1,5 +1,10 @@
 package com.example.ass4.adapters;
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +14,12 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ass4.ChatActivity;
 import com.example.ass4.R;
 import com.example.ass4.entities.Chat;
+import com.example.ass4.entities.User;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatViewHolder> {
@@ -51,10 +59,28 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatViewHold
             holder.tvTime.setText(current.getLastMessage().getCreated().toString());
             holder.tvUsername.setText(current.getOtherUser().getDisplayName());
             holder.tvLastMessage.setText(current.getLastMessage().getContent());
-            //holder.ivPic.setImageBitmap(current.getOtherUser().getPicture());
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            Bitmap profilePictureBitmap = current.getOtherUser().getPicture();
+            User user = current.getOtherUser();
+            //profilePictureBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            holder.ivPic.setImageBitmap(profilePictureBitmap);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, ChatActivity.class);
+                    intent.putExtra("userName", current.getOtherUser().getUserName());
+                    intent.putExtra("chatId", current.getId());
+                    Bitmap profilePictureBitmap = current.getOtherUser().getPicture();
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    profilePictureBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    byte[] profilePictureByteArray = byteArrayOutputStream.toByteArray();
+                    intent.putExtra("profilePicture", profilePictureByteArray);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
-
     public void setChats(List<Chat> s){
         chats = s;
         notifyDataSetChanged();

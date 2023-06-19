@@ -81,7 +81,6 @@ public class Login extends AppCompatActivity {
                 getUserTask.execute();
             } else {
                 Toast.makeText(Login.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
-
             }
         }
     }
@@ -104,8 +103,9 @@ public class Login extends AppCompatActivity {
         if (isUserSet) {
             Intent intent = new Intent(Login.this, ContactsActivity.class);
             startActivity(intent);
+            finish();
         } else {
-            Toast.makeText(Login.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Login.this, "token error", Toast.LENGTH_SHORT).show();
 
         }
     }
