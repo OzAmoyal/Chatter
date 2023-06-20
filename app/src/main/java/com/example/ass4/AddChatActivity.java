@@ -1,5 +1,6 @@
 package com.example.ass4;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.ass4.api.ChatsAPI;
 
 public class AddChatActivity extends AppCompatActivity {
 
@@ -35,9 +38,18 @@ public class AddChatActivity extends AppCompatActivity {
                 String userName = etUserName.getText().toString().trim();
                 if (!userName.isEmpty()) {
                     // Add chat logic here
-                    Toast.makeText(AddChatActivity.this, "Chat added with user: " + userName, Toast.LENGTH_SHORT).show();
-                    etUserName.setText(""); // Clear the input field
-                    finish(); // Close the activity
+                    //Toast.makeText(AddChatActivity.this, "Chat added with user: " + userName, Toast.LENGTH_SHORT).show();
+                    //define onResume.
+                    ChatsAPI chatsAPI = new ChatsAPI();
+                    String chatID = chatsAPI.createNewChat(userName);
+                    if(chatID.equals("User not found")){
+                        Toast.makeText(AddChatActivity.this, "User not found", Toast.LENGTH_SHORT).show();
+                        return;
+                    }else {
+                        Toast.makeText(AddChatActivity.this, "Chat added with user: " + userName, Toast.LENGTH_SHORT).show();
+                        etUserName.setText(""); // Clear the input field
+                        finish(); // Close the activity
+                    }
                 } else {
                     Toast.makeText(AddChatActivity.this, "Please enter a user name", Toast.LENGTH_SHORT).show();
                 }

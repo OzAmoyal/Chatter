@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,6 +32,8 @@ public class ChatsAPI {
 Retrofit retrofit;
 WebServiceAPI webServiceAPI;
 Chat tempChat;
+String errorMessage;
+Message tempMessage;
 List<Chat> tempChatList;
      public ChatsAPI() { //MutableLiveData<List<Chat>> postListData, PostDao dao
      /*
@@ -65,6 +68,13 @@ List<Chat> tempChatList;
                 User user = new User(chat.getUser().getUsername(), chat.getUser().getProfilePic(), chat.getUser().getDisplayName());
 
                 ResponseGetChatsAPI.Message last = chat.getLastMessage();
+
+                if(last == null) {
+                    Message lastMessage = null;
+                    Chat chat1 = new Chat(chat.getId(), new ArrayList<>(), user, lastMessage);
+                    tempChatList.add(chat1);
+                    continue;
+                }
                 Message lastMessage = new Message(last.getId(), last.getContent(), getDate(last.getCreated()), true);
                 Chat chat1 = new Chat(chat.getId(), new ArrayList<>(), user, lastMessage);
                 tempChatList.add(chat1);
@@ -73,13 +83,80 @@ List<Chat> tempChatList;
 
         return tempChatList;
     }
+    public String createNewChat(String username){
+        CountDownLatch latch = new CountDownLatch(1);
+        RequestNewChatAPI requestNewChatAPI = new RequestNewChatAPI(username);
+        Call<ResponseCreateChatAPI> call = webServiceAPI.createChat(requestNewChatAPI,MyApplication.getToken());
+        call.enqueue(new Callback<ResponseCreateChatAPI>() {
+            @Override
+            public void onResponse(Call<ResponseCreateChatAPI> call, Response<ResponseCreateChatAPI> response) {
+                if(response.code()==400) {
+                    errorMessage = "User not found";
+                    latch.countDown();
+                }
+                else{
+                    ResponseCreateChatAPI chat = response.body();
+                    errorMessage = chat.getId();
+                    latch.countDown();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseCreateChatAPI> call, Throwable t) {
+                latch.countDown();
+            }
+        });
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        String errorMessage1 = errorMessage;
+        errorMessage= null;
+        return errorMessage1;
+    }
+    public Message sendMessage(String chatId, String message){
+        CountDownLatch latch = new CountDownLatch(1);
+        RequestSendMessageAPI requestSendMessageAPI = new RequestSendMessageAPI(message);
+        Call<ResponseSendMessageAPI> call = webServiceAPI.createMessage(chatId,requestSendMessageAPI,MyApplication.getToken());
+        call.enqueue(new Callback<ResponseSendMessageAPI>() {
+            @Override
+            public void onResponse(Call<ResponseSendMessageAPI> call, Response<ResponseSendMessageAPI> response) {
+                if(!response.isSuccessful()){
+                    latch.countDown();
+                    return;
+                }
+                ResponseSendMessageAPI message = response.body();
+                tempMessage = new Message(message.getId(), message.getContent(), getDate(message.getCreated()),MyApplication.isThatMe(message.getSenderUsername()));
+                latch.countDown();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseSendMessageAPI> call, Throwable t) {
+                latch.countDown();
+            }
+        });
+        try {
+            latch.await();
+            if(tempMessage!=null){
+                Message tempMessage1 = tempMessage;
+                tempMessage=null;
+                return tempMessage1;
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public Chat getChatByID(String id) {
+         CountDownLatch latch = new CountDownLatch(1);
       Call<ResponseGetChatByIDAPI> call = webServiceAPI.getChatById(id,MyApplication.getToken());
         call.enqueue(new Callback<ResponseGetChatByIDAPI>() {
                 @Override
                 public void onResponse(Call<ResponseGetChatByIDAPI> call, Response<ResponseGetChatByIDAPI> response) {
                 if(!response.isSuccessful()){
+                    latch.countDown();
                     return;
                 }
                 ResponseGetChatByIDAPI chat = response.body();
@@ -104,14 +181,21 @@ List<Chat> tempChatList;
                 Message lastMessage= new Message(last.getId(), last.getContent(), getDate(last.getCreated()),MyApplication.isThatMe(last.getSender().getUsername()));
                User user = new User(otherUser.getUsername(), otherUser.getProfilePic(), otherUser.getDisplayName());
                 tempChat = new Chat(chat.getId(), messages,user,lastMessage);
+                latch.countDown();
 
             }
 
             @Override
             public void onFailure(Call<ResponseGetChatByIDAPI> call, Throwable t) {
                 System.out.println("Failed to get posts");
+                latch.countDown();
             }
         });
+        try{
+            latch.await();
+        }catch (InterruptedException e) {
+        //
+        }
          return tempChat;
         }
         public static Date getDate(String dateString){
