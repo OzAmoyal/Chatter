@@ -81,7 +81,7 @@ public class SignUp extends AppCompatActivity {
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                     byte[] imageBytes = byteArrayOutputStream.toByteArray();
-                    String profilePic = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+                    String profilePic = "data:image/png;base64," + Base64.encodeToString(imageBytes, Base64.DEFAULT);
                     CreateUserTask createUserTask = new CreateUserTask(username,password,displayName,profilePic);
                     createUserTask.execute();
 

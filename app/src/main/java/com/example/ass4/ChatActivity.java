@@ -1,6 +1,8 @@
 package com.example.ass4;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,13 +14,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.ass4.adapters.MessageAdapter;
+import com.example.ass4.entities.Chat;
 import com.example.ass4.entities.Message;
+import com.example.ass4.viewModels.ChatViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
     ImageView profilePictureView;
     TextView userNameView;
+    ChatViewModel chatViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +41,21 @@ public class ChatActivity extends AppCompatActivity {
 
         profilePictureView = findViewById(R.id.user_image_profile_image);
         userNameView = findViewById(R.id.user_text_user_name);
+        chatViewModel = new ViewModelProvider(this).get(ChatViewModel.class);
+        String chatId = getIntent().getStringExtra("chatId");
+        LiveData<Chat> chatLiveData = chatViewModel.getChatByID(chatId);
+        ListView lvMessages = findViewById(R.id.lvMessages);
+
+        chatLiveData.observe(this, chat -> {
+            if (chat != null) {
+               List<Message> messageList= chat.getMessages();
+                MessageAdapter messageAdapter = new MessageAdapter(this, messageList);
+                lvMessages.setAdapter(messageAdapter);
+
+            }
+        });
 
         Intent activityIntent = getIntent();
-        ArrayList<Message> messages = new ArrayList<>();
-
-        ListView lvMessages = findViewById(R.id.lvMessages);
-        MessageAdapter messageAdapter = new MessageAdapter(this, messages);
-        lvMessages.setAdapter(messageAdapter);
         if (activityIntent != null) {
             String userName = activityIntent.getStringExtra("userName");
             byte[] profilePictureByteArray = getIntent().getByteArrayExtra("profilePicture");

@@ -11,6 +11,7 @@ import com.example.ass4.ChatDao;
 import com.example.ass4.MyApplication;
 import com.example.ass4.api.ChatsAPI;
 import com.example.ass4.entities.Chat;
+import com.example.ass4.entities.Message;
 
 import java.util.List;
 
@@ -18,12 +19,14 @@ public class ChatsRepository {
     private ChatDao chatDao;
     private ChatsAPI chatsAPI;
     private MutableLiveData<List<Chat>> chatListData;
+    private MutableLiveData<Chat> chatData;
 
     public ChatsRepository() {
         ChatDB db = Room.databaseBuilder(MyApplication.getContext(), ChatDB.class, "ChatDB").allowMainThreadQueries().build();
         chatDao = db.chatDao();
         chatsAPI = new ChatsAPI();
         chatListData = new MutableLiveData<>();
+        chatData = new MutableLiveData<>();
         chatListData.postValue(chatDao.index());
 
         reload();
@@ -35,6 +38,10 @@ public class ChatsRepository {
 
     public void reload() {
         new GetChatsTask().execute();
+    }
+    public LiveData<Chat> getChatByID(String id){
+        new GetChatByIDTask(id).execute();
+        return chatData;
     }
 
     private class GetChatsTask extends AsyncTask<Void, Void, List<Chat>> {
@@ -58,5 +65,29 @@ public class ChatsRepository {
             chatListData.setValue(result);
         }
     }
+    private class GetChatByIDTask extends AsyncTask<Void, Void, Chat> {
+        private String id;
+        public GetChatByIDTask(String id){
+            this.id=id;
+        }
+        @Override
+        protected Chat doInBackground(Void... params) {
+            Chat chat = chatsAPI.getChatByID(id);
+            if(chat!=null){
+                chatDao.update(chat);
+                return chat;
+            }
+            //return chatDao.get(id);
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(Chat chat){
+            chatData.setValue(chat);
+            chatListData.setValue(chatDao.index());
+        }
+    }
+
 
 }

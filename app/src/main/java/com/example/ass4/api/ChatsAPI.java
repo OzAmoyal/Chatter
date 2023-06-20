@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -75,11 +76,13 @@ List<Chat> tempChatList;
     }
 
     public Chat getChatByID(String id) {
+         CountDownLatch latch = new CountDownLatch(1);
       Call<ResponseGetChatByIDAPI> call = webServiceAPI.getChatById(id,MyApplication.getToken());
         call.enqueue(new Callback<ResponseGetChatByIDAPI>() {
                 @Override
                 public void onResponse(Call<ResponseGetChatByIDAPI> call, Response<ResponseGetChatByIDAPI> response) {
                 if(!response.isSuccessful()){
+                    latch.countDown();
                     return;
                 }
                 ResponseGetChatByIDAPI chat = response.body();
@@ -104,14 +107,21 @@ List<Chat> tempChatList;
                 Message lastMessage= new Message(last.getId(), last.getContent(), getDate(last.getCreated()),MyApplication.isThatMe(last.getSender().getUsername()));
                User user = new User(otherUser.getUsername(), otherUser.getProfilePic(), otherUser.getDisplayName());
                 tempChat = new Chat(chat.getId(), messages,user,lastMessage);
+                latch.countDown();
 
             }
 
             @Override
             public void onFailure(Call<ResponseGetChatByIDAPI> call, Throwable t) {
                 System.out.println("Failed to get posts");
+                latch.countDown();
             }
         });
+        try{
+            latch.await();
+        }catch (InterruptedException e) {
+        //
+        }
          return tempChat;
         }
         public static Date getDate(String dateString){

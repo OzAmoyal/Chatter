@@ -14,12 +14,13 @@ import com.example.ass4.R;
 import com.example.ass4.entities.Message;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MessageAdapter extends ArrayAdapter<Message> {
     LayoutInflater inflater;
 
-    public MessageAdapter(Context ctx, ArrayList<Message> MessagesArrayList) {
-        super(ctx, R.layout.message_mine_item, MessagesArrayList);
+    public MessageAdapter(Context ctx, List<Message> MessagesList) {
+        super(ctx, R.layout.message_mine_item, MessagesList);
 
         this.inflater = LayoutInflater.from(ctx);
     }
