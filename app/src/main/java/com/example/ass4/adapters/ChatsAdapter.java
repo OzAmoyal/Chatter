@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ass4.ChatActivity;
 import com.example.ass4.R;
 import com.example.ass4.entities.Chat;
+import com.example.ass4.entities.Message;
 import com.example.ass4.entities.User;
 
 import java.io.ByteArrayOutputStream;
@@ -56,9 +57,15 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatViewHold
         if(chats !=null) {
             final Chat current = chats.get(position);
             System.out.println(current.getLastMessage().getContent().toString());
-            holder.tvTime.setText(current.getLastMessage().getCreated().toString());
+            Message lastMessage= current.getLastMessage();
+            if(lastMessage==null){
+                holder.tvTime.setText("");
+                holder.tvLastMessage.setText("");
+            }else{
+                holder.tvTime.setText(current.getLastMessage().getCreated().toLocaleString());
+                holder.tvLastMessage.setText(current.getLastMessage().getContent());
+            }
             holder.tvUsername.setText(current.getOtherUser().getDisplayName());
-            holder.tvLastMessage.setText(current.getLastMessage().getContent());
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             Bitmap profilePictureBitmap = current.getOtherUser().getPicture();
             User user = current.getOtherUser();
@@ -69,7 +76,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatViewHold
                 public void onClick(View v) {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, ChatActivity.class);
-                    intent.putExtra("userName", current.getOtherUser().getUserName());
+                    intent.putExtra("userName", current.getOtherUser().getDisplayName());
                     intent.putExtra("chatId", current.getId());
                     Bitmap profilePictureBitmap = current.getOtherUser().getPicture();
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

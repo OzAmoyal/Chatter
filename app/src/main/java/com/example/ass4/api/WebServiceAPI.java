@@ -23,9 +23,9 @@ public interface WebServiceAPI {
  @GET("Chats/{id}/Messages")
  Call<List<Message>> getMessagesByChatId(@Path("id") String id,@Header("Authorization") String token);
  @POST("Chats/{id}/Messages")
- Call<Void> createMessage(@Path("id") String id, @Body Message message,@Header("Authorization") String token);
+ Call<ResponseSendMessageAPI> createMessage(@Path("id") String id, @Body RequestSendMessageAPI message,@Header("Authorization") String token);
  @POST("Chats")
- Call<Void> createChat(@Body Chat chat,@Header("Authorization") String token);
+ Call<ResponseCreateChatAPI> createChat(@Body RequestNewChatAPI username,@Header("Authorization") String token);
  @DELETE("Chats/{id}")
  Call<Void> deleteChat(@Path("id") String id,@Header("Authorization") String token);
  @POST("tokens")

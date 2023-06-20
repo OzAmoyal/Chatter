@@ -27,6 +27,9 @@ public class ChatViewModel extends ViewModel {
         this.chat=chatsRepository.getChatByID(id);
         return chat;
     }
+    public void sendMessage(String chatId, String message){
+        chatsRepository.sendMessage(chatId,message);
+    }
   /*  public void reload(){
         chatsRepository.reload();
     }*/

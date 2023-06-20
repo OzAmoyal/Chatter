@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -64,5 +65,14 @@ public class ChatActivity extends AppCompatActivity {
             profilePictureView.setImageBitmap(profilePictureBitmap);
             userNameView.setText(userName);
         }
+        Button btnSend = findViewById(R.id.btnSend);
+        btnSend.setOnClickListener(v -> {
+            String message = ((TextView) findViewById(R.id.etMessage)).getText().toString();
+            if(message.isEmpty())
+                return;
+            chatViewModel.sendMessage(chatId, message);
+            ((TextView) findViewById(R.id.etMessage)).setText("");
+        });
+
     }
 }

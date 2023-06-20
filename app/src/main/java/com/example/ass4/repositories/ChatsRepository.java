@@ -43,6 +43,9 @@ public class ChatsRepository {
         new GetChatByIDTask(id).execute();
         return chatData;
     }
+    public void sendMessage(String chatId, String message){
+        new SendMessageTask(chatId,message).execute();
+    }
 
     private class GetChatsTask extends AsyncTask<Void, Void, List<Chat>> {
         @Override
@@ -86,6 +89,33 @@ public class ChatsRepository {
         protected void onPostExecute(Chat chat){
             chatData.setValue(chat);
             chatListData.setValue(chatDao.index());
+        }
+    }
+    private class SendMessageTask extends AsyncTask<Void, Void, Chat> {
+        private String chatId;
+        private String message;
+        public SendMessageTask(String chatId,String message){
+            this.chatId=chatId;
+            this.message=message;
+        }
+        @Override
+        protected Chat doInBackground(Void... params) {
+            Message message = chatsAPI.sendMessage(chatId,this.message);
+            if(message!=null){
+                Chat chat = chatDao.get(chatId);
+                chat.getMessages().add(message);
+                chatDao.update(chat);
+                return chat;
+            }
+            //return chatDao.get(id);
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(Chat chat){
+            chatListData.setValue(chatDao.index());
+            chatData.setValue(chat);
         }
     }
 
