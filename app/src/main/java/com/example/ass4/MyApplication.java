@@ -7,6 +7,7 @@ import com.example.ass4.entities.User;
 
 public class MyApplication extends Application{
     public static Context context;
+    public static String firebaseToken;
     public static String token;
     public static User user;
     @Override
@@ -30,6 +31,12 @@ public class MyApplication extends Application{
     }
     public static User getUser(){
         return user;
+    }
+    public static String getFirebaseToken(){
+        return firebaseToken;
+    }
+    public static void setFirebaseToken(String token){
+        firebaseToken=token;
     }
     public static Boolean isThatMe(String username){
         return username.equals(user.getUserName());

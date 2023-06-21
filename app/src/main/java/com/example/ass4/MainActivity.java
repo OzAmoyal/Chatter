@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceIdReceiver;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -57,6 +60,12 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, SignUp.class);
                 startActivity(intent);
             }
+        });
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MainActivity.this,instanceIdResult -> {
+            String newToken = instanceIdResult.getToken();
+            System.out.println("newToken: " + newToken);
+            MyApplication.setFirebaseToken(newToken);
         });
     }
 }
