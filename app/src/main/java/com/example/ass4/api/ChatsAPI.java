@@ -178,11 +178,18 @@ List<Chat> tempChatList;
                     }
                 }
                 ResponseGetChatByIDAPI.Message last= chat.getLastMessage();
-                Message lastMessage= new Message(last.getId(), last.getContent(), getDate(last.getCreated()),MyApplication.isThatMe(last.getSender().getUsername()));
-               User user = new User(otherUser.getUsername(), otherUser.getProfilePic(), otherUser.getDisplayName());
-                tempChat = new Chat(chat.getId(), messages,user,lastMessage);
-                latch.countDown();
-
+                if(last==null){
+                    Message lastMessage = null;
+                    User user = new User(otherUser.getUsername(), otherUser.getProfilePic(), otherUser.getDisplayName());
+                    tempChat = new Chat(chat.getId(), messages,user,lastMessage);
+                    latch.countDown();
+                    return;
+                }else {
+                    Message lastMessage = new Message(last.getId(), last.getContent(), getDate(last.getCreated()), MyApplication.isThatMe(last.getSender().getUsername()));
+                    User user = new User(otherUser.getUsername(), otherUser.getProfilePic(), otherUser.getDisplayName());
+                    tempChat = new Chat(chat.getId(), messages, user, lastMessage);
+                    latch.countDown();
+                }
             }
 
             @Override

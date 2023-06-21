@@ -48,7 +48,9 @@ public class ChatActivity extends AppCompatActivity {
         ListView lvMessages = findViewById(R.id.lvMessages);
 
         chatLiveData.observe(this, chat -> {
+            System.out.println("1");
             if (chat != null) {
+                System.out.println("2");
                List<Message> messageList= chat.getMessages();
                 MessageAdapter messageAdapter = new MessageAdapter(this, messageList);
                 lvMessages.setAdapter(messageAdapter);

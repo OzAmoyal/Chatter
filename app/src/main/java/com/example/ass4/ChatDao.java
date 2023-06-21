@@ -23,4 +23,6 @@ Chat get(String id);
 
        @Delete
  void delete(Chat... chats);
+       @Query("DELETE FROM Chat")
+       void deleteAll();
 }
