@@ -30,9 +30,12 @@ public class ChatViewModel extends ViewModel {
     public void sendMessage(String chatId, String message){
         chatsRepository.sendMessage(chatId,message);
     }
-  /*  public void reload(){
+    public void reload(){
         chatsRepository.reload();
-    }*/
+    }
+    public void logout() {
+    chatsRepository.logout();
+    }
 //    public void add(Chat chat){
 //        chatsRepository.add(chat);
 //    }

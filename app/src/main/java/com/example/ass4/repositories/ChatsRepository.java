@@ -118,6 +118,10 @@ public class ChatsRepository {
             chatData.setValue(chat);
         }
     }
-
+public void logout() {
+    chatData.postValue(null);
+    chatListData.postValue(null);
+    chatDao.deleteAll();
+}
 
 }

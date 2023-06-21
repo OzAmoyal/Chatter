@@ -29,7 +29,10 @@ public class ResponseGetChatByIDAPI {
     }
 
     public Message getLastMessage() {
-        return messages.get(messages.size() - 1);
+        if(messages.size() > 0)
+            return messages.get(messages.size() - 1);
+        else
+            return null;
     }
 
     // User class
