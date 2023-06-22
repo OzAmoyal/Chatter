@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -36,19 +38,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //******************************************************************************************
-        View btnTest = findViewById(R.id.btnTest);
-
-        // Set click listener on the login button
-        btnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create an intent to launch the Login activity
-                Intent intent = new Intent(MainActivity.this, ContactsActivity.class);
-                startActivity(intent);
-            }
-        });
-//******************************************************************************************
         // Find the signup button by its id
         View btnSignup = findViewById(R.id.btnSignup);
 
@@ -61,10 +50,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        ImageButton btnSettings = findViewById(R.id.btnSettings);
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+
+                startActivity(intent);
+            }
+        });
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MainActivity.this,instanceIdResult -> {
             String newToken = instanceIdResult.getToken();
-            System.out.println("newToken: " + newToken);
             MyApplication.setFirebaseToken(newToken);
         });
     }
