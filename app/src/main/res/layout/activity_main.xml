@@ -5,6 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+    <ImageButton
+        android:id="@+id/btnSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_corners"
+        android:padding="6dp"
+        android:src="@drawable/ic_setting"
+
+         />
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -43,14 +53,7 @@
 
             android:id="@+id/btnSignup"
             android:layout_margin="16dp" />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="testButton"
-            android:id="@+id/btnTest"
-            android:textColor="?attr/colorSecondaryVariant"
-
-            android:layout_margin="16dp" />
+    
 
     </LinearLayout>
 
