@@ -13,8 +13,12 @@ import androidx.annotation.Nullable;
 import com.example.ass4.R;
 import com.example.ass4.entities.Message;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MessageAdapter extends ArrayAdapter<Message> {
     LayoutInflater inflater;
@@ -43,9 +47,27 @@ public class MessageAdapter extends ArrayAdapter<Message> {
         TextView messageText = convertView.findViewById(R.id.tvMessageText);
         TextView messageTime = convertView.findViewById(R.id.tvMessageTime);
         messageText.setText(message.getContent());
-        messageTime.setText(message.getCreated().toString());
+        messageTime.setText(formatMessageDate(message.getCreated()));
 
         return convertView;
+    }
+    public static String formatMessageDate(Date date) {
+        Calendar currentDate = Calendar.getInstance();
+        Calendar messageDate = Calendar.getInstance();
+        messageDate.setTime(date);
+
+        boolean isToday = messageDate.get(Calendar.YEAR) == currentDate.get(Calendar.YEAR) &&
+                messageDate.get(Calendar.MONTH) == currentDate.get(Calendar.MONTH) &&
+                messageDate.get(Calendar.DAY_OF_MONTH) == currentDate.get(Calendar.DAY_OF_MONTH);
+
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault());
+
+        if (isToday) {
+            return timeFormat.format(date);
+        } else {
+            return dateFormat.format(date);
+        }
     }
 
 }

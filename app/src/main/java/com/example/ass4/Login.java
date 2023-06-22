@@ -59,6 +59,7 @@ public class Login extends AppCompatActivity {
 
         });
     }
+
     private class GetTokenTask extends AsyncTask<Void, Void, Boolean> {
         private String username;
         private String password;
@@ -67,6 +68,7 @@ public class Login extends AppCompatActivity {
             this.username = username;
             this.password = password;
         }
+
         @Override
         protected Boolean doInBackground(Void... voids) {
             LoginAPI loginAPI = new LoginAPI();
@@ -85,29 +87,48 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    private class GetUserTask extends AsyncTask<Void, Void, Boolean>{
-    private String username;
-    public GetUserTask(String username) {
-        this.username = username;
-    }
-    @Override
-    protected Boolean doInBackground(Void... voids) {
-        UserAPI userAPI = new UserAPI();
-        Boolean isUserSet = userAPI.getUserDetails(username);
-        return isUserSet;
-    }
+    private class GetUserTask extends AsyncTask<Void, Void, Boolean> {
+        private String username;
+
+        public GetUserTask(String username) {
+            this.username = username;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            UserAPI userAPI = new UserAPI();
+            System.out.println("inside GetUserTask");
+            Boolean isUserSet = userAPI.getUserDetails(username);
+            return isUserSet;
+        }
 
 
         @Override
-    protected void onPostExecute(Boolean isUserSet) {
-        if (isUserSet) {
-            Intent intent = new Intent(Login.this, ContactsActivity.class);
-            startActivity(intent);
-            finish();
-        } else {
-            Toast.makeText(Login.this, "token error", Toast.LENGTH_SHORT).show();
+        protected void onPostExecute(Boolean isUserSet) {
+            if (isUserSet) {
+                SendFirebaseTokenTask sendFirebaseTokenTask = new SendFirebaseTokenTask();
+                sendFirebaseTokenTask.execute();
+                Intent intent = new Intent(Login.this, ContactsActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(Login.this, "token error", Toast.LENGTH_SHORT).show();
 
+            }
         }
     }
-}
-}
+
+        private class SendFirebaseTokenTask extends AsyncTask<Void, Void, Void> {
+
+
+            public SendFirebaseTokenTask() {
+            }
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                LoginAPI loginAPI = new LoginAPI();
+                loginAPI.sendFirebaseToken();
+                return null;
+            }
+        }
+    }

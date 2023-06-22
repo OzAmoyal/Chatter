@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.ass4.ChatDao;
+import com.example.ass4.MyApplication;
 import com.example.ass4.entities.Chat;
 import com.example.ass4.repositories.ChatsRepository;
 
@@ -16,7 +17,7 @@ public class ChatViewModel extends ViewModel {
     private LiveData<Chat> chat;
 
     public ChatViewModel(){
-        this.chatsRepository = new ChatsRepository();
+        this.chatsRepository = MyApplication.getChatRepository();
         this.chats = chatsRepository.getAllChats();
     }
     public LiveData<List<Chat>> getChats(){

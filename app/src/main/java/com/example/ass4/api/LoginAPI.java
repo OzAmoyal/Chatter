@@ -56,6 +56,25 @@ public class LoginAPI {
         }
         return MyApplication.isTokenSet();
     }
-
-
+    public Void sendFirebaseToken(){
+        CountDownLatch latch = new CountDownLatch(1);
+        RequestSendFirebaseTokenAPI requestSendFirebaseTokenAPI = new RequestSendFirebaseTokenAPI(MyApplication.getFirebaseToken());
+        Call<Void> call = webServiceAPI.sendFirebaseToken(requestSendFirebaseTokenAPI,MyApplication.getToken());
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                latch.countDown();
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                latch.countDown();
+            }
+        });
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

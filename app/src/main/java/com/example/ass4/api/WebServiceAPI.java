@@ -34,4 +34,6 @@ public interface WebServiceAPI {
  Call<ResponseGetUserDetails> getUser(@Path("username") String username,@Header("Authorization") String token);
  @POST("Users")
  Call<Void> createUser(@Body NewUser user);
+ @POST("firebaseToken")
+    Call<Void> sendFirebaseToken(@Body RequestSendFirebaseTokenAPI requestSendFirebaseTokenAPI,@Header("Authorization") String token);
  }

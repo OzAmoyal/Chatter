@@ -14,6 +14,7 @@ import com.example.ass4.entities.Chat;
 import com.example.ass4.entities.Message;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ChatsRepository {
     private ChatDao chatDao;
@@ -34,6 +35,12 @@ public class ChatsRepository {
 
     public LiveData<List<Chat>> getAllChats() {
         return chatListData;
+    }
+    public boolean isChatLoaded(String id){
+        if(chatData.getValue()==null){
+            return false;
+        }
+        return id.equals(chatData.getValue().getId());
     }
 
     public void reload() {
