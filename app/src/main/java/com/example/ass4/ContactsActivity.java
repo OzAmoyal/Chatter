@@ -55,7 +55,12 @@ public class ContactsActivity extends AppCompatActivity {
         }
 
         ImageView ivProfilePictures = binding.ivProfilePictures;
-        User user =MyApplication.getUser();
+        User user = MyApplication.getUser();
+        if(user == null) {
+          System.out.println("user is null");
+        }else {
+            System.out.println(user.getUserName());
+        }
         Bitmap picture = user.getPicture();
         ivProfilePictures.setImageBitmap(picture);
         ImageButton btnSettings = binding.btnSettings;

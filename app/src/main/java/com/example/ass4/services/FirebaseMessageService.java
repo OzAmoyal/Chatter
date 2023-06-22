@@ -13,18 +13,28 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.ass4.MyApplication;
 import com.example.ass4.R;
+import com.example.ass4.repositories.ChatsRepository;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class FirebaseMessageService extends com.google.firebase.messaging.FirebaseMessagingService {
     @Override
     public void onNewToken(String token) {
         super.onNewToken(token);
-        Log.d("NEW_TOKEN", token);
+        System.out.println("NEW_TOKEN"+token);
         MyApplication.setFirebaseToken(token);
     }
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+        String chatID = remoteMessage.getData().get("chatID");
+        System.out.println("NEW_MESSAGE"+chatID);
+        ChatsRepository chatsRepository= MyApplication.getChatRepository();
+            chatsRepository.reload();
+            if(chatsRepository.isChatLoaded(chatID)){
+                chatsRepository.getChatByID(chatID);
+            }
+//
+//        }
         //Log.d("NEW_MESSAGE",remoteMessage.getNotification().getBody());
         if (remoteMessage.getNotification() != null) {
             createNotificationChannel();
@@ -39,6 +49,7 @@ public class FirebaseMessageService extends com.google.firebase.messaging.Fireba
             } catch (SecurityException e) {
                 e.printStackTrace();
             }
+
         }
 
     }
