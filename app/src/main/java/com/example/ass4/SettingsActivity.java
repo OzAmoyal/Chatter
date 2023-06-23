@@ -50,8 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
                 editor.putString("theme", newTheme); // 'theme' is the selected theme ('Light' or 'Dark')
                 editor.apply();
             }
-            Intent intent=new Intent(SettingsActivity.this,MainActivity.class);
-            startActivity(intent);
+            finish();
             // Save the settings
             // ..
         });

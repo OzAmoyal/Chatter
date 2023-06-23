@@ -20,14 +20,12 @@ public class FirebaseMessageService extends com.google.firebase.messaging.Fireba
     @Override
     public void onNewToken(String token) {
         super.onNewToken(token);
-        System.out.println("NEW_TOKEN"+token);
         MyApplication.setFirebaseToken(token);
     }
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         String chatID = remoteMessage.getData().get("chatID");
-        System.out.println("NEW_MESSAGE"+chatID);
         ChatsRepository chatsRepository= MyApplication.getChatRepository();
             chatsRepository.reload();
             if(chatsRepository.isChatLoaded(chatID)){

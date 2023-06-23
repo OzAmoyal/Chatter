@@ -34,7 +34,7 @@ public class MyApplication extends Application{
         else{
             serverUrl=getResources().getString(R.string.BaseUrl);
         }
-        System.out.println("ServerUrl: "+serverUrl);
+        System.out.println(serverUrl);
 
         chatsRepository = new ChatsRepository();
         token= null;

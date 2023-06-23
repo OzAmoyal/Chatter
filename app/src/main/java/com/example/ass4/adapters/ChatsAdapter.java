@@ -1,5 +1,4 @@
 package com.example.ass4.adapters;
-import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -65,7 +64,6 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatViewHold
     public void onBindViewHolder(ChatViewHolder holder, int position){
         if(chats !=null) {
             final Chat current = chats.get(position);
-            //System.out.println(current.getLastMessage().getContent().toString());
             Message lastMessage= current.getLastMessage();
             if(lastMessage==null){
                 holder.tvTime.setText("");
@@ -79,8 +77,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatViewHold
             Bitmap profilePictureBitmap = current.getOtherUser().getPicture();
             Glide.with(MyApplication.getContext()).load(profilePictureBitmap).centerCrop().transition(DrawableTransitionOptions.withCrossFade()).into(holder.ivPic);
             User user = current.getOtherUser();
-            //profilePictureBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-            //holder.ivPic.setImageBitmap(profilePictureBitmap);
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

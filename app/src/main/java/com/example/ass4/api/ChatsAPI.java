@@ -86,12 +86,10 @@ List<Chat> tempChatList;
     public void createNewChat(String username, final CreateChatCallback callback) {
         RequestNewChatAPI requestNewChatAPI = new RequestNewChatAPI(username);
         Call<ResponseCreateChatAPI> call = webServiceAPI.createChat(requestNewChatAPI, MyApplication.getToken());
-        System.out.println("start create");
 
         call.enqueue(new Callback<ResponseCreateChatAPI>() {
             @Override
             public void onResponse(Call<ResponseCreateChatAPI> call, Response<ResponseCreateChatAPI> response) {
-                System.out.println("onResponse");
                 if (response.code() == 400) {
                     callback.onFailure("User not found");
                 } else {
@@ -102,7 +100,6 @@ List<Chat> tempChatList;
 
             @Override
             public void onFailure(Call<ResponseCreateChatAPI> call, Throwable t) {
-                System.out.println("onFailure");
                 callback.onFailure("Network request failed");
             }
         });
@@ -186,7 +183,6 @@ List<Chat> tempChatList;
 
             @Override
             public void onFailure(Call<ResponseGetChatByIDAPI> call, Throwable t) {
-                System.out.println("Failed to get posts");
                 latch.countDown();
             }
         });
