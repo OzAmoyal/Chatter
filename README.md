@@ -54,7 +54,7 @@ Inside the cloned repository, you will find two additional folders, namely "Andr
 
 #### To start the server
 1. Navigate to the folder where you cloned the repository - chatAss4
-2. Navigate to the folder of the server by executing the command ``` cd Server ```
+2. Navigate to the folder of the server by executing the command ``` cd node_server ```
 3. execute the command ``` npm install ``` to download node_modules folder for the server.
 4. execute the command ``` npm start ``` to start the server.
 5. Access the chatbot interface in your browser by visiting http://localhost:3000
