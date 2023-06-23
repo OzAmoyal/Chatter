@@ -83,7 +83,7 @@ The frontend of the Android client application is developed using Java for the a
 - Node.js
 - Express.js
 - MongoDB
--SQLite
+- SQLite
 
 The backend of the application is implemented using Node.js and Express.js. It follows a server-client architecture, where the Android client communicates with the server using API endpoints for user authentication, contact management, chat conversations, and message exchange. The server utilizes SQLite as the local database to store chats, messages, and relevant information within the Android client application.
 
