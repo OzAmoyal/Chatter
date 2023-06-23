@@ -12,6 +12,7 @@
         <item name="colorOnSurface">#ACACAC</item> <!-- Set the text color on the surface color to black -->
         <item name="colorError">#B00020</item> <!-- Set a dark red color for error messages -->
         <item name="android:logo">@drawable/logo_transparent_light</item>
+        <item name="android:fontFamily">@font/sfpro </item>
     </style>
     <style name="circleImageView" parent="">
         <item name="cornerFamily">rounded</item>
@@ -30,6 +31,7 @@
         <item name="colorOnSurface">#000000</item> <!-- Set the text color on the surface color to black -->
         <item name="colorError">#B00020</item> <!-- Set a dark red color for error messages -->
         <item name="backgroundColor">@color/light_gray</item>
+        <item name="android:fontFamily">@font/sfpro </item>
 
 
         <!-- Add other dark theme attributes -->

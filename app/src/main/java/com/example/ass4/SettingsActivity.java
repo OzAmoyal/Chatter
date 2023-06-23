@@ -25,17 +25,19 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         // Inside onCreate method of other activities
         EditText etServerAddress = findViewById(R.id.etServerAddress);
-        etServerAddress.setText("http://");
+        etServerAddress.setText(MyApplication.serverUrl);
         Spinner spinnerTheme = findViewById(R.id.spinnerTheme);
         spinnerTheme.setSelection(0);
         Button btnSave=findViewById(R.id.btnSave);
         btnSave.setOnClickListener(v -> {
             String serverAddress = etServerAddress.getText().toString();
-            String newTheme = spinnerTheme.getSelectedItem().toString();
-            if (serverAddress.isEmpty()) {
+            if(serverAddress.isEmpty()){
                 etServerAddress.setError("Please enter a server address");
                 return;
+            }else{
+                MyApplication.setServerUrl(serverAddress);
             }
+            String newTheme = spinnerTheme.getSelectedItem().toString();
             if(newTheme.equals("Dark")){
                 SharedPreferences newSharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -18,7 +18,10 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.ass4.ChatActivity;
+import com.example.ass4.MyApplication;
 import com.example.ass4.R;
 import com.example.ass4.entities.Chat;
 import com.example.ass4.entities.Message;
@@ -74,9 +77,10 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatViewHold
             holder.tvUsername.setText(current.getOtherUser().getDisplayName());
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             Bitmap profilePictureBitmap = current.getOtherUser().getPicture();
+            Glide.with(MyApplication.getContext()).load(profilePictureBitmap).centerCrop().transition(DrawableTransitionOptions.withCrossFade()).into(holder.ivPic);
             User user = current.getOtherUser();
             //profilePictureBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-            holder.ivPic.setImageBitmap(profilePictureBitmap);
+            //holder.ivPic.setImageBitmap(profilePictureBitmap);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

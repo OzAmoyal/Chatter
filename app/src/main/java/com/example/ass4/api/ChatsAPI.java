@@ -41,7 +41,7 @@ List<Chat> tempChatList;
      this.dao = dao;
     */
       retrofit = new Retrofit.Builder()
-      .baseUrl(MyApplication.getContext().getString(R.string.BaseUrl))
+      .baseUrl(MyApplication.getServerUrl())
       .addConverterFactory(GsonConverterFactory.create())
       .build();
       webServiceAPI = retrofit.create(WebServiceAPI.class);
@@ -87,9 +87,11 @@ List<Chat> tempChatList;
         CountDownLatch latch = new CountDownLatch(1);
         RequestNewChatAPI requestNewChatAPI = new RequestNewChatAPI(username);
         Call<ResponseCreateChatAPI> call = webServiceAPI.createChat(requestNewChatAPI,MyApplication.getToken());
+        System.out.println("start create");
         call.enqueue(new Callback<ResponseCreateChatAPI>() {
             @Override
             public void onResponse(Call<ResponseCreateChatAPI> call, Response<ResponseCreateChatAPI> response) {
+                System.out.println("onresponse");
                 if(response.code()==400) {
                     errorMessage = "User not found";
                     latch.countDown();
@@ -103,10 +105,12 @@ List<Chat> tempChatList;
 
             @Override
             public void onFailure(Call<ResponseCreateChatAPI> call, Throwable t) {
+                System.out.println("fail create");
                 latch.countDown();
             }
         });
         try {
+            System.out.println("try create");
             latch.await();
         } catch (InterruptedException e) {
             e.printStackTrace();

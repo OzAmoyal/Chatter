@@ -21,7 +21,7 @@ public class LoginAPI {
                 .setLenient()
                 .create();
         retrofit = new Retrofit.Builder()
-                .baseUrl(MyApplication.getContext().getString(R.string.BaseUrl))
+                .baseUrl(MyApplication.getServerUrl())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
@@ -75,6 +75,19 @@ public class LoginAPI {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+    public Void removeFirebaseToken(String token){
+        Call<Void> call = webServiceAPI.removeFirebaseToken(token);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+            }
+        });
+
         return null;
     }
 }
