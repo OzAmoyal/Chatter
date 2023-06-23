@@ -83,41 +83,29 @@ List<Chat> tempChatList;
 
         return tempChatList;
     }
-    public String createNewChat(String username){
-        CountDownLatch latch = new CountDownLatch(1);
+    public void createNewChat(String username, final CreateChatCallback callback) {
         RequestNewChatAPI requestNewChatAPI = new RequestNewChatAPI(username);
-        Call<ResponseCreateChatAPI> call = webServiceAPI.createChat(requestNewChatAPI,MyApplication.getToken());
+        Call<ResponseCreateChatAPI> call = webServiceAPI.createChat(requestNewChatAPI, MyApplication.getToken());
         System.out.println("start create");
+
         call.enqueue(new Callback<ResponseCreateChatAPI>() {
             @Override
             public void onResponse(Call<ResponseCreateChatAPI> call, Response<ResponseCreateChatAPI> response) {
-                System.out.println("onresponse");
-                if(response.code()==400) {
-                    errorMessage = "User not found";
-                    latch.countDown();
-                }
-                else{
+                System.out.println("onResponse");
+                if (response.code() == 400) {
+                    callback.onFailure("User not found");
+                } else {
                     ResponseCreateChatAPI chat = response.body();
-                    errorMessage = chat.getId();
-                    latch.countDown();
+                    callback.onSuccess(chat.getId());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseCreateChatAPI> call, Throwable t) {
-                System.out.println("fail create");
-                latch.countDown();
+                System.out.println("onFailure");
+                callback.onFailure("Network request failed");
             }
         });
-        try {
-            System.out.println("try create");
-            latch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        String errorMessage1 = errorMessage;
-        errorMessage= null;
-        return errorMessage1;
     }
     public Message sendMessage(String chatId, String message){
         CountDownLatch latch = new CountDownLatch(1);

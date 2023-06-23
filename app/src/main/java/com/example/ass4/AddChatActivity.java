@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ass4.api.ChatsAPI;
+import com.example.ass4.api.CreateChatCallback;
 
 public class AddChatActivity extends AppCompatActivity {
 
@@ -40,8 +41,23 @@ public class AddChatActivity extends AppCompatActivity {
                     // Add chat logic here
                     //Toast.makeText(AddChatActivity.this, "Chat added with user: " + userName, Toast.LENGTH_SHORT).show();
                     //define onResume.
-                    ChatsAPI chatsAPI = new ChatsAPI();
-                    String chatID = chatsAPI.createNewChat(userName);
+                    ChatsAPI chatsAPI = new ChatsAPI();chatsAPI.createNewChat(userName, new CreateChatCallback() {
+                        @Override
+                        public void onSuccess(String chatId) {
+                            // Handle successful response
+                            Toast.makeText(AddChatActivity.this, "Chat added with user: " + userName, Toast.LENGTH_SHORT).show();
+                            etUserName.setText(""); // Clear the input field
+                            finish(); // Close the activity
+                        }
+
+                        @Override
+                        public void onFailure(String errorMessage) {
+                            // Handle failure
+                            Toast.makeText(AddChatActivity.this, "User not found", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    });
+                    /*
                     if(chatID.equals("User not found")){
                         Toast.makeText(AddChatActivity.this, "User not found", Toast.LENGTH_SHORT).show();
                         return;
@@ -49,7 +65,7 @@ public class AddChatActivity extends AppCompatActivity {
                         Toast.makeText(AddChatActivity.this, "Chat added with user: " + userName, Toast.LENGTH_SHORT).show();
                         etUserName.setText(""); // Clear the input field
                         finish(); // Close the activity
-                    }
+                    }*/
                 } else {
                     Toast.makeText(AddChatActivity.this, "Please enter a user name", Toast.LENGTH_SHORT).show();
                 }
