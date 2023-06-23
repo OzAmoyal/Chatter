@@ -37,28 +37,35 @@ The Android client application follows a uniform design theme across all screens
 
 Inside the cloned repository, you will find two additional folders, namely "Android-app" and "Server."
 <br><br>
-<b>Android-app:</b> This folder contains all the code and resources related to the Android client application. It is responsible for the frontend of the chatbot system on the Android platform. Within the "Android-app" folder, you can expect to find Java classes, XML layouts, assets, and other resources necessary for building the user interface and functionalities of the Android client application. The folder also includes the necessary dependencies and build configurations for the Android app development environment.
+<b>Android_app:</b> This folder contains all the code and resources related to the Android client application. It is responsible for the frontend of the chatbot system on the Android platform. Within the "Android-app" folder, you can expect to find Java classes, XML layouts, assets, and other resources necessary for building the user interface and functionalities of the Android client application. The folder also includes the necessary dependencies and build configurations for the Android app development environment.
 <br><br>
-<b>Server:</b> This folder contains all the server-side code for the chatbot system. It encompasses the backend logic required to handle user authentication, manage contacts, chats, and messages, as well as interact with the database. Following the Model-View-Controller (MVC) architecture, the "Server" folder includes files related to models, views, controllers, routes, and any additional server configuration or utility files. The server is implemented using technologies such as Node.js, Express.js, and integrates Firebase services for push notifications and real-time message updates. Additionally, the server utilizes an SQLite database to store chats, messages, and relevant information locally within the Android client application.
+<b>node_server:</b> This folder contains all the server-side code for the chatbot system. It encompasses the backend logic required to handle user authentication, manage contacts, chats, and messages, as well as interact with the database. Following the Model-View-Controller (MVC) architecture, the "Server" folder includes files related to models, views, controllers, routes, and any additional server configuration or utility files. The server is implemented using technologies such as Node.js, Express.js, and integrates Firebase services for push notifications and real-time message updates. Additionally, the server utilizes an SQLite database to store chats, messages, and relevant information locally within the Android client application.
 <br><br>
 
 
 
-## Installation
-1. Make sure you have nodeJS and npm installed on your local machine.
+## Installation - Important!
+1. Make sure you have nodeJS, npm, and MongoDB installed on your local machine, and the MongoDB is running.
 
 2. Clone the repository to your local machine:
     ```
-    git clone https://github.com/OzAmoyal/chatAss3
+    git clone https://github.com/TopazAvraham/chatAss4
     ```
-3. Navigate to the folder where you cloned the repository - chatAss3
-4. Navigate to the folder of the server by executing the command ``` cd MVCnodeJS ```
-5. execute the command ``` npm install ``` to download node_modules folder for the server.
-6. execute the command ``` npm start ``` to start the server.
-7. Access the chatbot interface in your browser by visiting http://localhost:3000
-8. Register a new account, log in, add contacts and start chatting with them.
+
+#### To start the server
+1. Navigate to the folder where you cloned the repository - chatAss4
+2. Navigate to the folder of the server by executing the command ``` cd Server ```
+3. execute the command ``` npm install ``` to download node_modules folder for the server.
+4. execute the command ``` npm start ``` to start the server.
+5. Access the chatbot interface in your browser by visiting http://localhost:3000
+6. Register a new account, log in, add contacts and start chatting with them.
 <br><br>
 
+#### To start the android app:
+1. In andorid studio, open the folder called Android_app (which is inside chatAss4)
+2. Start the app on the emulator by pressing the green button.
+3. Register a new account, log in, add contacts and start chatting with them.
+<br><br>
 ## Built With
 
 ### Frontend
