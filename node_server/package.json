@@ -1,0 +1,34 @@
+{
+  "name": "chatass3",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "3",
+  "main": "index.js",
+  "scripts": {
+    "start": "set NODE_ENV=start & node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OzAmoyal/chatAss3.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OzAmoyal/chatAss3/issues"
+  },
+  "homepage": "https://github.com/OzAmoyal/chatAss3#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "custom-env": "^2.0.2",
+    "express": "^4.18.2",
+    "firebase-admin": "^11.9.0",
+    "http": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.2.0",
+    "socket.io": "^4.6.2",
+    "throw": "^1.1.1"
+  }
+}
