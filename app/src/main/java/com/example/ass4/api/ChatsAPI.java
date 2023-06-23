@@ -41,7 +41,7 @@ List<Chat> tempChatList;
      this.dao = dao;
     */
       retrofit = new Retrofit.Builder()
-      .baseUrl(MyApplication.getContext().getString(R.string.BaseUrl))
+      .baseUrl(MyApplication.getServerUrl())
       .addConverterFactory(GsonConverterFactory.create())
       .build();
       webServiceAPI = retrofit.create(WebServiceAPI.class);
@@ -83,37 +83,26 @@ List<Chat> tempChatList;
 
         return tempChatList;
     }
-    public String createNewChat(String username){
-        CountDownLatch latch = new CountDownLatch(1);
+    public void createNewChat(String username, final CreateChatCallback callback) {
         RequestNewChatAPI requestNewChatAPI = new RequestNewChatAPI(username);
-        Call<ResponseCreateChatAPI> call = webServiceAPI.createChat(requestNewChatAPI,MyApplication.getToken());
+        Call<ResponseCreateChatAPI> call = webServiceAPI.createChat(requestNewChatAPI, MyApplication.getToken());
+
         call.enqueue(new Callback<ResponseCreateChatAPI>() {
             @Override
             public void onResponse(Call<ResponseCreateChatAPI> call, Response<ResponseCreateChatAPI> response) {
-                if(response.code()==400) {
-                    errorMessage = "User not found";
-                    latch.countDown();
-                }
-                else{
+                if (response.code() == 400) {
+                    callback.onFailure("User not found");
+                } else {
                     ResponseCreateChatAPI chat = response.body();
-                    errorMessage = chat.getId();
-                    latch.countDown();
+                    callback.onSuccess(chat.getId());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseCreateChatAPI> call, Throwable t) {
-                latch.countDown();
+                callback.onFailure("Network request failed");
             }
         });
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        String errorMessage1 = errorMessage;
-        errorMessage= null;
-        return errorMessage1;
     }
     public Message sendMessage(String chatId, String message){
         CountDownLatch latch = new CountDownLatch(1);
@@ -194,7 +183,6 @@ List<Chat> tempChatList;
 
             @Override
             public void onFailure(Call<ResponseGetChatByIDAPI> call, Throwable t) {
-                System.out.println("Failed to get posts");
                 latch.countDown();
             }
         });

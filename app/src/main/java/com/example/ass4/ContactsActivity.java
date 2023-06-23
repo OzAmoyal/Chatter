@@ -13,13 +13,17 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import com.example.ass4.adapters.ChatsAdapter;
+import com.example.ass4.api.LoginAPI;
+import com.example.ass4.api.UserAPI;
 import com.example.ass4.databinding.ActivityContactsBinding;
 import com.example.ass4.entities.Chat;
 import com.example.ass4.entities.User;
 import com.example.ass4.viewModels.ChatViewModel;
 import java.util.ArrayList;
 import java.util.List;
-
+import android.widget.ImageView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 public class ContactsActivity extends AppCompatActivity {
     List<Chat> chats;
     private ActivityContactsBinding binding;
@@ -57,12 +61,11 @@ public class ContactsActivity extends AppCompatActivity {
         ImageView ivProfilePictures = binding.ivProfilePictures;
         User user = MyApplication.getUser();
         if(user == null) {
-          System.out.println("user is null");
         }else {
-            System.out.println(user.getUserName());
         }
         Bitmap picture = user.getPicture();
-        ivProfilePictures.setImageBitmap(picture);
+        Glide.with(this).load(picture).centerCrop().transition(DrawableTransitionOptions.withCrossFade()).into(ivProfilePictures);
+        //ivProfilePictures.setImageBitmap(picture);
         ImageButton btnSettings = binding.btnSettings;
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +89,9 @@ public class ContactsActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoginAPI loginAPI = new LoginAPI();
+                loginAPI.removeFirebaseToken(MyApplication.getToken());
+
                 MyApplication.setUser(null);
                 MyApplication.setToken(null);
                 chatViewModel.logout();

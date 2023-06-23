@@ -97,7 +97,6 @@ public class Login extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... voids) {
             UserAPI userAPI = new UserAPI();
-            System.out.println("inside GetUserTask");
             Boolean isUserSet = userAPI.getUserDetails(username);
             return isUserSet;
         }

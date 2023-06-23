@@ -20,7 +20,7 @@ public class UserAPI {
 
     public UserAPI() {
         retrofit = new Retrofit.Builder()
-                .baseUrl(MyApplication.getContext().getString(R.string.BaseUrl))
+                .baseUrl(MyApplication.getServerUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);

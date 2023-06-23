@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.ass4.adapters.MessageAdapter;
 import com.example.ass4.entities.Chat;
 import com.example.ass4.entities.Message;
@@ -48,9 +50,7 @@ public class ChatActivity extends AppCompatActivity {
         ListView lvMessages = findViewById(R.id.lvMessages);
 
         chatLiveData.observe(this, chat -> {
-            System.out.println("1");
             if (chat != null) {
-                System.out.println("2");
                List<Message> messageList= chat.getMessages();
                 MessageAdapter messageAdapter = new MessageAdapter(this, messageList);
                 lvMessages.setAdapter(messageAdapter);
@@ -63,8 +63,11 @@ public class ChatActivity extends AppCompatActivity {
             String userName = activityIntent.getStringExtra("userName");
             byte[] profilePictureByteArray = getIntent().getByteArrayExtra("profilePicture");
             Bitmap profilePictureBitmap = BitmapFactory.decodeByteArray(profilePictureByteArray, 0, profilePictureByteArray.length);
-
-            profilePictureView.setImageBitmap(profilePictureBitmap);
+            Glide.with(this)
+                    .load(profilePictureBitmap)
+                    .centerCrop()
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(profilePictureView);
             userNameView.setText(userName);
         }
         Button btnSend = findViewById(R.id.btnSend);

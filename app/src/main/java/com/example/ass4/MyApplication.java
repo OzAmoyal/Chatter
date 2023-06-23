@@ -15,6 +15,7 @@ public class MyApplication extends Application{
     public static User user;
     private static SharedPreferences sharedPreferences;
     public static ChatsRepository chatsRepository;
+    public static String serverUrl;
     @Override
     public void onCreate(){
         super.onCreate();
@@ -26,6 +27,15 @@ public class MyApplication extends Application{
         if (userJson != null) {
             user = new Gson().fromJson(userJson, User.class);
         }
+        String prefUrl=sharedPreferences.getString("ServerUrl",null);
+        if(prefUrl!=null){
+            serverUrl=prefUrl;
+        }
+        else{
+            serverUrl=getResources().getString(R.string.BaseUrl);
+        }
+        System.out.println(serverUrl);
+
         chatsRepository = new ChatsRepository();
         token= null;
         user = null;
@@ -33,6 +43,17 @@ public class MyApplication extends Application{
     public static ChatsRepository getChatRepository(){
         return chatsRepository;
     }
+    public static void setServerUrl(String url){
+        serverUrl=url;
+    }
+
+    public static String getServerUrl() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("ServerUrl", serverUrl);
+        editor.apply();
+        return serverUrl;
+    }
+
     public static Context getContext(){
         return context;
     }

@@ -36,4 +36,6 @@ public interface WebServiceAPI {
  Call<Void> createUser(@Body NewUser user);
  @POST("firebaseToken")
     Call<Void> sendFirebaseToken(@Body RequestSendFirebaseTokenAPI requestSendFirebaseTokenAPI,@Header("Authorization") String token);
- }
+ @DELETE("firebaseToken")
+Call<Void> removeFirebaseToken(@Header("Authorization") String token);
+};
