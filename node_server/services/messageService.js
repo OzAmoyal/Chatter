@@ -31,7 +31,7 @@ async function sendMessage(chatId, username, message) {
     const user2=await UserModel.findById(chat.users[1]._id);
     const notifiedUser = user1.username===username?user2:user1;
     if(firebaseService.isConnectedToFirebase(notifiedUser.username)){
-     firebaseService.sendMessage(chatId,notifiedUser.username,message);
+     firebaseService.sendMessage(chatId,notifiedUser.username,message,getUser.displayName);
     }
     if(socketService.isConnectedToSocket(notifiedUser.username)){
     socketService.sendMessage(chatId,notifiedUser.username,message);

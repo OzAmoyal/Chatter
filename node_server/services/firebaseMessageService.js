@@ -8,11 +8,11 @@ admin.initializeApp({
   // Add any additional configuration options you may need
 });
 
-function sendMessage(chatId, username, messageContent) {
+function sendMessage(chatId, username, messageContent,senderDisplayname) {
   const message = {
     token: userTokens[username],
     notification: {
-      title: username,
+      title: senderDisplayname,
       body: messageContent,
     },
     data: {
