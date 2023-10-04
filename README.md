@@ -11,7 +11,6 @@ The server component of the Chat-Application which was built using Node.js and E
 
 ## Demo Video of the Chat App
 
-### Please watch the video before installing the app! Click to watch:
 [![Video Title](https://img.youtube.com/vi/UXQj3TBe2os/0.jpg)](https://www.youtube.com/watch?v=UXQj3TBe2os)
 
 
@@ -49,7 +48,7 @@ Inside the cloned repository, you will find two additional folders, namely "Andr
 
 2. Clone the repository to your local machine:
     ```
-    git clone https://github.com/TopazAvraham/chatAss4
+    git clone https://github.com/OzAmoyal/Chatter.git
     ```
 
 #### To start the server
@@ -75,16 +74,25 @@ Frontend (Android Client)
 
 - Java
 - XML
-  
-The frontend of the Android client application is developed using Java for the application logic and XML for defining the user interface layouts. These technologies enable the creation of a native Android app that provides a rich and interactive user experience.
+- Android Studio
+- Firebase
+- SQLite
+
+The frontend of the Android client application is built in a MVVM architecture and developed using Java for the application logic and XML for defining the user interface layouts. These technologies enable the creation of a native Android app that provides a rich and interactive user experience. The client utilizes SQLite as the local database to store chats, messages, and relevant information within the Android client application.
+
+Frontend (Web Client)
+
+- React
+- Bootstrap
+- WebSockets
 
 
 ### Backend (MVC)
 - Node.js
 - Express.js
-- MongoDB
-- SQLite
+- MongoDB, Mongoose
+- WebSockets
 
-The backend of the application is implemented using Node.js and Express.js. It follows a server-client architecture, where the Android client communicates with the server using API endpoints for user authentication, contact management, chat conversations, and message exchange. The server utilizes SQLite as the local database to store chats, messages, and relevant information within the Android client application.
+The backend of the application is implemented using Node.js and Express.js using a MongoDB database using the Mongoose Module. It is built in MVC architecture, where the Android and web clients communicate with the server using REST API endpoints for user authentication, contact management, chat conversations, and message exchange.
 
 <br />
